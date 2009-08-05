@@ -7,9 +7,9 @@ class Linode
   end
   
   def test
-    @test ||= Test.new(:api_key => api_key)
+    @test ||= Linode::Test.new(:api_key => api_key)
   end
 end
 
-class Linode::Test < Linode
-end
+# include all Linode API namespace classes
+Dir[File.expand_path(File.dirname(__FILE__) + '/linode/*.rb')].each {|f| puts f; require f }
