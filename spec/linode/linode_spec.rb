@@ -155,4 +155,42 @@ describe Linode::Linode do
       linode.job.should == result
     end
   end
+  
+  it 'should be able to provide access to the Linode Ip API' do
+    @linode.should respond_to(:ip)
+  end
+  
+  describe 'when providing access to the Linode Ip API' do
+    before :each do
+      @api_key = 'foo'
+      @api_url = 'https://fake.linode.com/'
+      @linode = Linode::Linode.new(:api_key => @api_key, :api_url => @api_url)
+    end
+
+    it 'should allow no arguments' do
+      lambda { @linode.ip }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require no arguments' do
+      lambda { @linode.ip(:foo) }.should raise_error(ArgumentError)
+    end
+    
+    it 'should return a Linode::Avail instance' do
+      @linode.ip.class.should == Linode::Linode::Ip
+    end
+    
+    it 'should set the API key on the Linode::Domain::Resource instance to be our API key' do
+      @linode.ip.api_key.should == @api_key
+    end
+    
+    it 'should set the API url on the Linode::Domain::Resource instance to be our API url' do
+      @linode.ip.api_url.should == @api_url
+    end
+    
+    it 'should return the same Linode::Domain::Resource instance when called again' do
+      linode = Linode::Linode.new(:api_key => @api_key)
+      result = linode.ip
+      linode.ip.should == result
+    end
+  end
 end
