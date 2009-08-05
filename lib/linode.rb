@@ -34,11 +34,17 @@ class Linode
   
   def reformat_response(response)
     result = response['DATA']
-    result.keys.each do |k| 
-      result[k.downcase] = result[k]
-      result.delete(k) if k != k.downcase
+    return result.collect {|item| convert_item(item) } if result.class == Array
+    return result unless result.respond_to?(:keys)
+    convert_item(result)
+  end
+  
+  def convert_item(item)
+    item.keys.each do |k| 
+      item[k.downcase] = item[k]
+      item.delete(k) if k != k.downcase
     end
-    ::OpenStruct.new(result)
+    ::OpenStruct.new(item)
   end
 end
 

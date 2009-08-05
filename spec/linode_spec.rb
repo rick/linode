@@ -139,16 +139,51 @@ describe 'Linode' do
       		"ERRORARRAY":["failure"],
       		"ACTION":"test.echo",
       		"DATA":{"foo":"bar"}
-      	}!)
+      }!)
       lambda { @linode.send_request('test.echo', { :api_action => 'failure' }) }.should raise_error
     end
     
-    it 'should return an object with lower-cased methods for the data fields' do
-      @linode.send_request('test.echo', {}).foo.should == 'bar'
+    describe 'when the result is a list of hashes' do
+      it 'should return a list of objects with lower-cased methods for the data fields' do
+        HTTParty.stubs(:get).returns(%Q!{
+        		"ERRORARRAY":[],
+        		"ACTION":"test.echo",
+        		"DATA":[{"FOO":"bar"},{"BAR":"baz"}]
+        }!)
+        @linode.send_request('test.echo', {}).first.foo.should == 'bar'
+        @linode.send_request('test.echo', {}).last.bar.should == 'baz'
+      end
+      
+      it 'should return a list of objects which do not respond to upper-case URLs for the data fields' do
+        HTTParty.stubs(:get).returns(%Q!{
+        		"ERRORARRAY":[],
+        		"ACTION":"test.echo",
+        		"DATA":[{"FOO":"bar"},{"BAR":"baz"}]
+        }!)
+        @linode.send_request('test.echo', {}).first.should_not respond_to(:FOO)
+        @linode.send_request('test.echo', {}).last.should_not respond_to(:BAR)
+      end
     end
     
-    it 'should return an object which does not respond to upper-case URLs for the data fields' do
-      @linode.send_request('test.echo', {}).should_not respond_to(:FOO)
+    describe 'when the result is a hash' do
+      it 'should return an object with lower-cased methods for the data fields' do
+        @linode.send_request('test.echo', {}).foo.should == 'bar'
+      end
+    
+      it 'should return an object which does not respond to upper-case URLs for the data fields' do
+        @linode.send_request('test.echo', {}).should_not respond_to(:FOO)
+      end
+    end
+    
+    describe 'when the result is neither a list nor a hash' do
+      it 'should return the result unchanged' do
+        HTTParty.stubs(:get).returns(%Q!{
+        		"ERRORARRAY":[],
+        		"ACTION":"test.echo",
+        		"DATA":"thingie"
+        }!)
+        @linode.send_request('test.echo', {}).should == "thingie"
+      end
     end
   end
   
