@@ -42,4 +42,41 @@ describe Linode::Linode do
     end
   end
   
+  it 'should be able to provide access to the Linode Config API' do
+    @linode.should respond_to(:config)
+  end
+  
+  describe 'when providing access to the Linode Config API' do
+    before :each do
+      @api_key = 'foo'
+      @api_url = 'https://fake.linode.com/'
+      @linode = Linode::Linode.new(:api_key => @api_key, :api_url => @api_url)
+    end
+
+    it 'should allow no arguments' do
+      lambda { @linode.config }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require no arguments' do
+      lambda { @linode.config(:foo) }.should raise_error(ArgumentError)
+    end
+    
+    it 'should return a Linode::Avail instance' do
+      @linode.config.class.should == Linode::Linode::Config
+    end
+    
+    it 'should set the API key on the Linode::Domain::Resource instance to be our API key' do
+      @linode.config.api_key.should == @api_key
+    end
+    
+    it 'should set the API url on the Linode::Domain::Resource instance to be our API url' do
+      @linode.config.api_url.should == @api_url
+    end
+    
+    it 'should return the same Linode::Domain::Resource instance when called again' do
+      linode = Linode::Linode.new(:api_key => @api_key)
+      result = linode.config
+      linode.config.should == result
+    end
+  end
 end
