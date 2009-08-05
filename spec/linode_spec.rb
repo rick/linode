@@ -37,6 +37,22 @@ describe 'Linode' do
     @linode.api_key.should == 'foo'
   end
   
+  it 'should be able to return the current API URL' do
+    @linode.should respond_to(:api_url)
+  end
+  
+  describe 'when returning the current API URL' do
+    it 'should return the API URL provided at creation time if one was provided' do
+      @linode = Linode.new(:api_key => @api_key, :api_url => 'https://fake.linode.com/')
+      @linode.api_url.should == 'https://fake.linode.com/'
+    end
+    
+    it 'should return the stock linode API URL if none was provided at creation time' do
+      @linode = Linode.new(:api_key => @api_key)
+      @linode.api_url.should == 'https://api.linode.com/'      
+    end
+  end
+  
   it 'should be able to submit a request via the API' do
     @linode.should respond_to(:send_request)
   end

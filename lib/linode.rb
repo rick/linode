@@ -7,6 +7,7 @@ class Linode
   def initialize(args)
     raise ArgumentError, ":api_key is required" unless args[:api_key]
     @api_key = args[:api_key]
+    @api_url = args[:api_url] if args[:api_url]
   end
   
   def send_request(action, data)
@@ -22,6 +23,10 @@ class Linode
 
   def avail
     @avail ||= Linode::Avail.new(:api_key => api_key)
+  end
+  
+  def api_url
+    @api_url || 'https://api.linode.com/'
   end
   
   protected
