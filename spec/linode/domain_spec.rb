@@ -42,4 +42,41 @@ describe Linode::Domain do
     end
   end
   
+  it 'should be able to provide access to the Linode Domain Resource API' do
+    @linode.should respond_to(:resource)
+  end
+  
+  describe 'when providing access to the Linode Domain Resource API' do
+    before :each do
+      @api_key = 'foo'
+      @api_url = 'https://fake.linode.com/'
+      @linode = Linode::Domain.new(:api_key => @api_key, :api_url => @api_url)
+    end
+
+    it 'should allow no arguments' do
+      lambda { @linode.resource }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require no arguments' do
+      lambda { @linode.resource(:foo) }.should raise_error(ArgumentError)
+    end
+    
+    it 'should return a Linode::Avail instance' do
+      @linode.resource.class.should == Linode::Domain::Resource
+    end
+    
+    it 'should set the API key on the Linode::Domain::Resource instance to be our API key' do
+      @linode.resource.api_key.should == @api_key
+    end
+    
+    it 'should set the API url on the Linode::Domain::Resource instance to be our API url' do
+      @linode.resource.api_url.should == @api_url
+    end
+    
+    it 'should return the same Linode::Domain::Resource instance when called again' do
+      linode = Linode::Domain.new(:api_key => @api_key)
+      result = linode.resource
+      linode.resource.should == result
+    end
+  end
 end

@@ -68,3 +68,4 @@ end
 
 # include all Linode API namespace classes
 Dir[File.expand_path(File.dirname(__FILE__) + '/linode/*.rb')].each {|f| puts f; require f }
+Dir[File.expand_path(File.dirname(__FILE__) + '/linode/**/*.rb')].each {|f| puts f; require f }
