@@ -1,3 +1,7 @@
 Linode Ruby API
 
+To use:
+
+ % sudo gem install httparty
+
 To run tests you will need both rspec and mocha installed.
