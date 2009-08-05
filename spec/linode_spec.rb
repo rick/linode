@@ -244,7 +244,7 @@ describe 'Linode' do
       @linode.avail.api_url.should == @api_url
     end
     
-    it 'should return the same Linode::Test instance when called again' do
+    it 'should return the same Linode::Avail instance when called again' do
       linode = Linode.new(:api_key => @api_key)
       result = linode.avail
       linode.avail.should == result
@@ -276,7 +276,7 @@ describe 'Linode' do
       @linode.user.api_url.should == @api_url
     end
     
-    it 'should return the same Linode::Test instance when called again' do
+    it 'should return the same Linode::User instance when called again' do
       linode = Linode.new(:api_key => @api_key)
       result = linode.user
       linode.user.should == result
@@ -308,7 +308,7 @@ describe 'Linode' do
       @linode.domain.api_url.should == @api_url
     end
     
-    it 'should return the same Linode::Test instance when called again' do
+    it 'should return the same Linode::Domain instance when called again' do
       linode = Linode.new(:api_key => @api_key)
       result = linode.domain
       linode.domain.should == result
