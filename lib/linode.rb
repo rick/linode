@@ -15,6 +15,20 @@ class Linode
     end
   end
   
+  def self.has_namespace(*namespaces)
+    namespaces.each do |namespace|
+      define_method(namespace.to_sym) do ||
+        lookup = instance_variable_get("@#{namespace}")
+        return lookup if lookup
+        subclass = self.class.const_get(namespace.to_s.capitalize).new(:api_key => api_key, :api_url => api_url)
+        instance_variable_set("@#{namespace}", subclass)
+        subclass
+      end
+    end
+  end
+  
+  has_namespace :test, :avail, :user, :domain
+  
   def initialize(args)
     raise ArgumentError, ":api_key is required" unless args[:api_key]
     @api_key = args[:api_key]
@@ -31,23 +45,7 @@ class Linode
     raise "Error completing request [#{action}] @ [#{api_url}] with data [#{data.inspect}]: #{result["ERRORARRAY"].join(" / ")}" if result and result["ERRORARRAY"] and ! result["ERRORARRAY"].empty?
     reformat_response(result)
   end
-  
-  def test
-    @test ||= Linode::Test.new(:api_key => api_key, :api_url => api_url)
-  end
-
-  def avail
-    @avail ||= Linode::Avail.new(:api_key => api_key, :api_url => api_url)
-  end
-  
-  def user
-    @user ||= Linode::User.new(:api_key => api_key, :api_url => api_url)
-  end
-  
-  def domain
-    @domain ||= Linode::Domain.new(:api_key => api_key, :api_url => api_url)
-  end
-  
+ 
   protected
   
   def reformat_response(response)
@@ -67,5 +65,5 @@ class Linode
 end
 
 # include all Linode API namespace classes
-Dir[File.expand_path(File.dirname(__FILE__) + '/linode/*.rb')].each {|f| puts f; require f }
-Dir[File.expand_path(File.dirname(__FILE__) + '/linode/**/*.rb')].each {|f| puts f; require f }
+Dir[File.expand_path(File.dirname(__FILE__) + '/linode/*.rb')].each {|f| require f }
+Dir[File.expand_path(File.dirname(__FILE__) + '/linode/**/*.rb')].each {|f| require f }
