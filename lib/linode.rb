@@ -10,7 +10,11 @@ class Linode
     @api_key = args[:api_key]
     @api_url = args[:api_url] if args[:api_url]
   end
-  
+    
+  def api_url
+    @api_url || 'https://api.linode.com/'
+  end
+
   def send_request(action, data)
     data.delete_if {|k,v| [:api_key, :api_action, :api_responseFormat].include?(k) }
     result = Crack::JSON.parse(HTTParty.get(api_url, :query => { :api_key => api_key, :api_action => action, :api_responseFormat => 'json' }.merge(data)))
@@ -26,8 +30,8 @@ class Linode
     @avail ||= Linode::Avail.new(:api_key => api_key, :api_url => api_url)
   end
   
-  def api_url
-    @api_url || 'https://api.linode.com/'
+  def user
+    @user ||= Linode::User.new(:api_key => api_key, :api_url => api_url)
   end
   
   protected
