@@ -117,4 +117,42 @@ describe Linode::Linode do
       linode.disk.should == result
     end
   end
+  
+  it 'should be able to provide access to the Linode Job API' do
+    @linode.should respond_to(:job)
+  end
+  
+  describe 'when providing access to the Linode Job API' do
+    before :each do
+      @api_key = 'foo'
+      @api_url = 'https://fake.linode.com/'
+      @linode = Linode::Linode.new(:api_key => @api_key, :api_url => @api_url)
+    end
+
+    it 'should allow no arguments' do
+      lambda { @linode.job }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require no arguments' do
+      lambda { @linode.job(:foo) }.should raise_error(ArgumentError)
+    end
+    
+    it 'should return a Linode::Avail instance' do
+      @linode.job.class.should == Linode::Linode::Job
+    end
+    
+    it 'should set the API key on the Linode::Domain::Resource instance to be our API key' do
+      @linode.job.api_key.should == @api_key
+    end
+    
+    it 'should set the API url on the Linode::Domain::Resource instance to be our API url' do
+      @linode.job.api_url.should == @api_url
+    end
+    
+    it 'should return the same Linode::Domain::Resource instance when called again' do
+      linode = Linode::Linode.new(:api_key => @api_key)
+      result = linode.job
+      linode.job.should == result
+    end
+  end
 end
