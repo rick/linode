@@ -5,6 +5,16 @@ require 'httparty'
 class Linode
   attr_reader :api_key
   
+  def self.has_method(*actions)
+    actions.each do |action|
+      define_method(action.to_sym) do |*data|
+        data = data.shift if data
+        data ||= {}
+        send_request(self.class.name.downcase.sub(/^linode::/, '').gsub(/::/, '.') + ".#{action}", data)
+      end
+    end
+  end
+  
   def initialize(args)
     raise ArgumentError, ":api_key is required" unless args[:api_key]
     @api_key = args[:api_key]
@@ -32,6 +42,10 @@ class Linode
   
   def user
     @user ||= Linode::User.new(:api_key => api_key, :api_url => api_url)
+  end
+  
+  def domain
+    @domain ||= Linode::Domain.new(:api_key => api_key, :api_url => api_url)
   end
   
   protected

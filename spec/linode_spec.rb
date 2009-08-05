@@ -282,5 +282,37 @@ describe 'Linode' do
       linode.user.should == result
     end
   end
+
+  it 'should be able to provide access to the Linode Domain API' do
+    @linode.should respond_to(:domain)
+  end
+  
+  describe 'when providing access to the Linode Domain API' do
+    it 'should allow no arguments' do
+      lambda { @linode.domain }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require no arguments' do
+      lambda { @linode.domain(:foo) }.should raise_error(ArgumentError)
+    end
+    
+    it 'should return a Linode::Domain instance' do
+      @linode.domain.class.should == Linode::Domain
+    end
+    
+    it 'should set the API key on the Linode::Domain instance to be our API key' do
+      @linode.domain.api_key.should == @api_key
+    end
+    
+    it 'should set the API url on the Linode::Domain instance to be our API url' do
+      @linode.domain.api_url.should == @api_url
+    end
+    
+    it 'should return the same Linode::Test instance when called again' do
+      linode = Linode.new(:api_key => @api_key)
+      result = linode.domain
+      linode.domain.should == result
+    end
+  end
 end
 
