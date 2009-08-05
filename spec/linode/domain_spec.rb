@@ -61,7 +61,7 @@ describe Linode::Domain do
       lambda { @linode.resource(:foo) }.should raise_error(ArgumentError)
     end
     
-    it 'should return a Linode::Avail instance' do
+    it 'should return a Linode::Domain::Resource instance' do
       @linode.resource.class.should == Linode::Domain::Resource
     end
     

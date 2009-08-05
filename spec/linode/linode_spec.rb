@@ -61,19 +61,19 @@ describe Linode::Linode do
       lambda { @linode.config(:foo) }.should raise_error(ArgumentError)
     end
     
-    it 'should return a Linode::Avail instance' do
+    it 'should return a Linode::Linode::Config instance' do
       @linode.config.class.should == Linode::Linode::Config
     end
     
-    it 'should set the API key on the Linode::Domain::Resource instance to be our API key' do
+    it 'should set the API key on the Linode::Linode::Config instance to be our API key' do
       @linode.config.api_key.should == @api_key
     end
     
-    it 'should set the API url on the Linode::Domain::Resource instance to be our API url' do
+    it 'should set the API url on the Linode::Linode::Config instance to be our API url' do
       @linode.config.api_url.should == @api_url
     end
     
-    it 'should return the same Linode::Domain::Resource instance when called again' do
+    it 'should return the same Linode::Linode::Config instance when called again' do
       linode = Linode::Linode.new(:api_key => @api_key)
       result = linode.config
       linode.config.should == result
@@ -99,19 +99,19 @@ describe Linode::Linode do
       lambda { @linode.disk(:foo) }.should raise_error(ArgumentError)
     end
     
-    it 'should return a Linode::Avail instance' do
+    it 'should return a Linode::Linode::Disk instance' do
       @linode.disk.class.should == Linode::Linode::Disk
     end
     
-    it 'should set the API key on the Linode::Domain::Resource instance to be our API key' do
+    it 'should set the API key on the Linode::Linode::Disk instance to be our API key' do
       @linode.disk.api_key.should == @api_key
     end
     
-    it 'should set the API url on the Linode::Domain::Resource instance to be our API url' do
+    it 'should set the API url on the Linode::Linode::Disk instance to be our API url' do
       @linode.disk.api_url.should == @api_url
     end
     
-    it 'should return the same Linode::Domain::Resource instance when called again' do
+    it 'should return the same Linode::Linode::Disk instance when called again' do
       linode = Linode::Linode.new(:api_key => @api_key)
       result = linode.disk
       linode.disk.should == result
@@ -137,19 +137,19 @@ describe Linode::Linode do
       lambda { @linode.job(:foo) }.should raise_error(ArgumentError)
     end
     
-    it 'should return a Linode::Avail instance' do
+    it 'should return a Linode::Linode::Job instance' do
       @linode.job.class.should == Linode::Linode::Job
     end
     
-    it 'should set the API key on the Linode::Domain::Resource instance to be our API key' do
+    it 'should set the API key on the Linode::Linode::Job instance to be our API key' do
       @linode.job.api_key.should == @api_key
     end
     
-    it 'should set the API url on the Linode::Domain::Resource instance to be our API url' do
+    it 'should set the API url on the Linode::Linode::Job instance to be our API url' do
       @linode.job.api_url.should == @api_url
     end
     
-    it 'should return the same Linode::Domain::Resource instance when called again' do
+    it 'should return the same Linode::Linode::Job instance when called again' do
       linode = Linode::Linode.new(:api_key => @api_key)
       result = linode.job
       linode.job.should == result
@@ -175,19 +175,19 @@ describe Linode::Linode do
       lambda { @linode.ip(:foo) }.should raise_error(ArgumentError)
     end
     
-    it 'should return a Linode::Avail instance' do
+    it 'should return a Linode::Linode::Ip instance' do
       @linode.ip.class.should == Linode::Linode::Ip
     end
     
-    it 'should set the API key on the Linode::Domain::Resource instance to be our API key' do
+    it 'should set the API key on the Linode::Linode::Ip instance to be our API key' do
       @linode.ip.api_key.should == @api_key
     end
     
-    it 'should set the API url on the Linode::Domain::Resource instance to be our API url' do
+    it 'should set the API url on the Linode::Linode::Ip instance to be our API url' do
       @linode.ip.api_url.should == @api_url
     end
     
-    it 'should return the same Linode::Domain::Resource instance when called again' do
+    it 'should return the same Linode::Linode::Linode instance when called again' do
       linode = Linode::Linode.new(:api_key => @api_key)
       result = linode.ip
       linode.ip.should == result
