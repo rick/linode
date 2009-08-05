@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{linode}
-  s.version = "0.5.0"
+  s.version = "0.5.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rick Bradley"]
@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
      "lib/linode/linode/job.rb",
      "lib/linode/test.rb",
      "lib/linode/user.rb",
+     "linode.gemspec",
      "spec/linode/avail_spec.rb",
      "spec/linode/domain/resource_spec.rb",
      "spec/linode/domain_spec.rb",
@@ -73,8 +74,11 @@ Gem::Specification.new do |s|
     s.specification_version = 2
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<httparty>, [">= 0.4.4"])
     else
+      s.add_dependency(%q<httparty>, [">= 0.4.4"])
     end
   else
+    s.add_dependency(%q<httparty>, [">= 0.4.4"])
   end
 end
