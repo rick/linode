@@ -42,11 +42,21 @@ class Linode
   def send_request(action, data)
     data.delete_if {|k,v| [:api_key, :api_action, :api_responseFormat].include?(k) }
     result = Crack::JSON.parse(HTTParty.get(api_url, :query => { :api_key => api_key, :api_action => action, :api_responseFormat => 'json' }.merge(data)))
-    raise "Error completing request [#{action}] @ [#{api_url}] with data [#{data.inspect}]: #{result["ERRORARRAY"].join(" / ")}" if result and result["ERRORARRAY"] and ! result["ERRORARRAY"].empty?
+    raise "Errors completing request [#{action}] @ [#{api_url}] with data [#{data.inspect}]:\n#{error_message(result, action)}" if error?(result)
     reformat_response(result)
   end
  
   protected
+  
+  def error?(response)
+    response and response["ERRORARRAY"] and ! response["ERRORARRAY"].empty?
+  end
+  
+  def error_message(response, action)
+    response["ERRORARRAY"].collect { |err|
+      "  - Error \##{err["ERRORCODE"]} - #{err["ERRORMESSAGE"]}.  (Please consult http://www.linode.com/api/autodoc.cfm?method=#{action})"
+    }.join("\n")
+  end
   
   def reformat_response(response)
     result = response['DATA']
