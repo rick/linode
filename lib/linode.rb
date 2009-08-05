@@ -27,7 +27,7 @@ class Linode
     end
   end
   
-  has_namespace :test, :avail, :user, :domain
+  has_namespace :test, :avail, :user, :domain, :linode
   
   def initialize(args)
     raise ArgumentError, ":api_key is required" unless args[:api_key]
