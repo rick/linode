@@ -1,15 +1,14 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
+require 'spec/rake/spectask'
 
-desc 'Default: run unit tests.'
-task :default => :test
+desc 'Default: run specs.'
+task :default => :spec
 
-desc 'Test the data_manager plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.pattern = 'spec/**/*_spec.rb'
-  t.verbose = true
+desc 'Test the linode library.'
+Spec::Rake::SpecTask.new('spec') do |t|
+  t.spec_files = FileList['spec/**/*_spec.rb']
 end
 
 begin
@@ -21,6 +20,7 @@ begin
     gemspec.email = "rick@rickbradley.com"
     gemspec.homepage = "http://github.com/rick/linode"
     gemspec.authors = ["Rick Bradley"]
+    gemspec.add_dependency('httparty', '>= 0.4.4')
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"

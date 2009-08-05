@@ -2,7 +2,7 @@ Linode Ruby API
 
 INSTALLATION:
 
- % sudo gem install httparty
+ % sudo gem install rick-linode
 
  To run tests you will need both rspec and mocha installed.
 
