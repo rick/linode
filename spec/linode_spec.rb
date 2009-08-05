@@ -25,9 +25,44 @@ describe Linode do
       end
     end
   end
+end
+
+describe 'Linode' do  
+  before :each do
+    @api_key = 'foo'
+    @linode = Linode.new(:api_key => @api_key)
+  end
   
   it 'should be able to return the API key provided at creation time' do
-    Linode.new(:api_key => 'foo').api_key.should == 'foo'
+    @linode.api_key.should == 'foo'
+  end
+  
+  it 'should be able to provide access to the Linode Test API' do
+    @linode.should respond_to(:test)
+  end
+  
+  describe 'when providing access to the Linode Test API' do
+    it 'should allow no arguments' do
+      lambda { @linode.test }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require no arguments' do
+      lambda { @linode.test(:foo) }.should raise_error(ArgumentError)
+    end
+    
+    it 'should return a Linode::Test instance' do
+      @linode.test.class.should == Linode::Test
+    end
+    
+    it 'should set the API key on the Linode::Test instance to be our API key' do
+      @linode.test.api_key.should == @api_key
+    end
+    
+    it 'should return the same Linode::Test instance when called again' do
+      linode = Linode.new(:api_key => @api_key)
+      result = linode.test
+      linode.test.should == result
+    end
   end
 end
 
