@@ -79,4 +79,42 @@ describe Linode::Linode do
       linode.config.should == result
     end
   end
+
+  it 'should be able to provide access to the Linode Disk API' do
+    @linode.should respond_to(:disk)
+  end
+  
+  describe 'when providing access to the Linode Disk API' do
+    before :each do
+      @api_key = 'foo'
+      @api_url = 'https://fake.linode.com/'
+      @linode = Linode::Linode.new(:api_key => @api_key, :api_url => @api_url)
+    end
+
+    it 'should allow no arguments' do
+      lambda { @linode.disk }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require no arguments' do
+      lambda { @linode.disk(:foo) }.should raise_error(ArgumentError)
+    end
+    
+    it 'should return a Linode::Avail instance' do
+      @linode.disk.class.should == Linode::Linode::Disk
+    end
+    
+    it 'should set the API key on the Linode::Domain::Resource instance to be our API key' do
+      @linode.disk.api_key.should == @api_key
+    end
+    
+    it 'should set the API url on the Linode::Domain::Resource instance to be our API url' do
+      @linode.disk.api_url.should == @api_url
+    end
+    
+    it 'should return the same Linode::Domain::Resource instance when called again' do
+      linode = Linode::Linode.new(:api_key => @api_key)
+      result = linode.disk
+      linode.disk.should == result
+    end
+  end
 end
