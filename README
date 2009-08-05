@@ -1,1 +1,3 @@
 Linode Ruby API
+
+To run tests you will need both rspec and mocha installed.
