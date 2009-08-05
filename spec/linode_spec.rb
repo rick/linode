@@ -30,7 +30,8 @@ end
 describe 'Linode' do  
   before :each do
     @api_key = 'foo'
-    @linode = Linode.new(:api_key => @api_key)
+    @api_url = 'https://fake.linode.com/'
+    @linode = Linode.new(:api_key => @api_key, :api_url => @api_url)
   end
   
   it 'should be able to return the API key provided at creation time' do
@@ -98,6 +99,13 @@ describe 'Linode' do
       @linode.send_request('test.echo', { })            
     end
     
+    it 'should set the response format to JSON' do
+      HTTParty.expects(:get).with { |path, args|
+        args[:query][:api_responseFormat] == 'json'
+      }.returns(@json)
+      @linode.send_request('test.echo', { })      
+    end
+    
     it 'should provide the data hash to the HTTP API request' do
       HTTParty.expects(:get).with { |path, args|
         args[:query]['foo'] == 'bar'
@@ -117,6 +125,13 @@ describe 'Linode' do
         args[:query][:api_action] == 'test.echo'
       }.returns(@json)
       @linode.send_request('test.echo', { :api_action => 'h4x0r' })
+    end
+    
+    it 'should not allow overriding the API response format via the data hash' do
+      HTTParty.expects(:get).with { |path, args|
+        args[:query][:api_responseFormat] == 'json'
+      }.returns(@json)
+      @linode.send_request('test.echo', { :api_responseFormat => 'h4x0r' })
     end
     
     it 'should fail when the request submission fails' do
@@ -158,6 +173,10 @@ describe 'Linode' do
       @linode.test.api_key.should == @api_key
     end
     
+    it 'should set the API URL on the Linode::Test instance to be our API URL' do
+      @linode.test.api_url.should == @api_url
+    end
+    
     it 'should return the same Linode::Test instance when called again' do
       linode = Linode.new(:api_key => @api_key)
       result = linode.test
@@ -178,12 +197,16 @@ describe 'Linode' do
       lambda { @linode.avail(:foo) }.should raise_error(ArgumentError)
     end
     
-    it 'should return a Linode::Test instance' do
+    it 'should return a Linode::Avail instance' do
       @linode.avail.class.should == Linode::Avail
     end
     
-    it 'should set the API key on the Linode::Test instance to be our API key' do
+    it 'should set the API key on the Linode::Avail instance to be our API key' do
       @linode.avail.api_key.should == @api_key
+    end
+    
+    it 'should set the API url on the Linode::Avail instance to be our API url' do
+      @linode.avail.api_url.should == @api_url
     end
     
     it 'should return the same Linode::Test instance when called again' do

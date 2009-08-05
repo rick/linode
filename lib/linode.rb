@@ -1,4 +1,5 @@
 require 'rubygems'
+require 'ostruct'
 require 'httparty'
 
 class Linode
@@ -11,18 +12,18 @@ class Linode
   end
   
   def send_request(action, data)
-    data.delete_if {|k,v| [:api_key, :api_action].include?(k) }
-    result = Crack::JSON.parse(HTTParty.get(api_url, :query => { :api_key => api_key, :api_action => action }.merge(data)))
-    raise "Error completing request [#{action}] with data [#{data.inspect}]: #{result["ERRORARRAY"].join(" / ")}" if result and result["ERRORARRAY"] and ! result["ERRORARRAY"].empty?
+    data.delete_if {|k,v| [:api_key, :api_action, :api_responseFormat].include?(k) }
+    result = Crack::JSON.parse(HTTParty.get(api_url, :query => { :api_key => api_key, :api_action => action, :api_responseFormat => 'json' }.merge(data)))
+    raise "Error completing request [#{action}] @ [#{api_url}] with data [#{data.inspect}]: #{result["ERRORARRAY"].join(" / ")}" if result and result["ERRORARRAY"] and ! result["ERRORARRAY"].empty?
     reformat_response(result)
   end
   
   def test
-    @test ||= Linode::Test.new(:api_key => api_key)
+    @test ||= Linode::Test.new(:api_key => api_key, :api_url => api_url)
   end
 
   def avail
-    @avail ||= Linode::Avail.new(:api_key => api_key)
+    @avail ||= Linode::Avail.new(:api_key => api_key, :api_url => api_url)
   end
   
   def api_url
@@ -37,7 +38,7 @@ class Linode
       result[k.downcase] = result[k]
       result.delete(k) if k != k.downcase
     end
-    OpenStruct.new(result)
+    ::OpenStruct.new(result)
   end
 end
 
