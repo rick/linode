@@ -9,6 +9,10 @@ class Linode
   def test
     @test ||= Linode::Test.new(:api_key => api_key)
   end
+
+  def avail
+    @avail ||= Linode::Avail.new(:api_key => api_key)
+  end
 end
 
 # include all Linode API namespace classes

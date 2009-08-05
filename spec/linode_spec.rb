@@ -64,5 +64,33 @@ describe 'Linode' do
       linode.test.should == result
     end
   end
+
+  it 'should be able to provide access to the Linode Avail API' do
+    @linode.should respond_to(:avail)
+  end
+  
+  describe 'when providing access to the Linode Avail API' do
+    it 'should allow no arguments' do
+      lambda { @linode.avail }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require no arguments' do
+      lambda { @linode.avail(:foo) }.should raise_error(ArgumentError)
+    end
+    
+    it 'should return a Linode::Test instance' do
+      @linode.avail.class.should == Linode::Avail
+    end
+    
+    it 'should set the API key on the Linode::Test instance to be our API key' do
+      @linode.avail.api_key.should == @api_key
+    end
+    
+    it 'should return the same Linode::Test instance when called again' do
+      linode = Linode.new(:api_key => @api_key)
+      result = linode.avail
+      linode.avail.should == result
+    end
+  end
 end
 
