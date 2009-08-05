@@ -37,6 +37,90 @@ describe 'Linode' do
     @linode.api_key.should == 'foo'
   end
   
+  it 'should be able to submit a request via the API' do
+    @linode.should respond_to(:send_request)
+  end
+  
+  describe 'when submitting a request via the API' do
+    before :each do
+      @json = %Q!{
+      		"ERRORARRAY":[],
+      		"ACTION":"test.echo",
+      		"DATA":{"FOO":"bar"}
+      	}!
+      HTTParty.stubs(:get).returns(@json)
+      @linode.stubs(:api_url).returns('https://fake.linode.com/')
+    end
+    
+    it 'should allow a request name and a data hash' do
+      lambda { @linode.send_request('test.echo', {}) }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require a request name and a data hash' do
+      lambda { @linode.send_request('test.echo') }.should raise_error(ArgumentError)      
+    end
+    
+    it 'should make a request to the API url' do
+      @linode.stubs(:api_url).returns('https://fake.linode.com/')
+      HTTParty.expects(:get).with { |path, args|
+        path == 'https://fake.linode.com/'
+      }.returns(@json)
+      @linode.send_request('test.echo', { })
+    end
+    
+    it 'should provide the API key when making its request' do
+      HTTParty.expects(:get).with { |path, args|
+        args[:query][:api_key] == @api_key
+      }.returns(@json)
+      @linode.send_request('test.echo', { })      
+    end
+    
+    it 'should set the designated request method as the HTTP API action' do
+      HTTParty.expects(:get).with { |path, args|
+        args[:query][:api_action] == 'test.echo'
+      }.returns(@json)
+      @linode.send_request('test.echo', { })            
+    end
+    
+    it 'should provide the data hash to the HTTP API request' do
+      HTTParty.expects(:get).with { |path, args|
+        args[:query]['foo'] == 'bar'
+      }.returns(@json)
+      @linode.send_request('test.echo', { 'foo' => 'bar' })                  
+    end
+    
+    it 'should not allow overriding the API key via the data hash' do
+      HTTParty.expects(:get).with { |path, args|
+        args[:query][:api_key] == @api_key
+      }.returns(@json)
+      @linode.send_request('test.echo', { :api_key => 'h4x0r' })                        
+    end
+    
+    it 'should not allow overriding the API action via the data hash' do
+      HTTParty.expects(:get).with { |path, args|
+        args[:query][:api_action] == 'test.echo'
+      }.returns(@json)
+      @linode.send_request('test.echo', { :api_action => 'h4x0r' })
+    end
+    
+    it 'should fail when the request submission fails' do
+      HTTParty.stubs(:get).returns(%Q!{
+      		"ERRORARRAY":["failure"],
+      		"ACTION":"test.echo",
+      		"DATA":{"foo":"bar"}
+      	}!)
+      lambda { @linode.send_request('test.echo', { :api_action => 'failure' }) }.should raise_error
+    end
+    
+    it 'should return an object with lower-cased methods for the data fields' do
+      @linode.send_request('test.echo', {}).foo.should == 'bar'
+    end
+    
+    it 'should return an object which does not respond to upper-case URLs for the data fields' do
+      @linode.send_request('test.echo', {}).should_not respond_to(:FOO)
+    end
+  end
+  
   it 'should be able to provide access to the Linode Test API' do
     @linode.should respond_to(:test)
   end

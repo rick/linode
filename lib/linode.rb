@@ -1,3 +1,6 @@
+require 'rubygems'
+require 'httparty'
+
 class Linode
   attr_reader :api_key
   
@@ -6,12 +9,30 @@ class Linode
     @api_key = args[:api_key]
   end
   
+  def send_request(action, data)
+    data.delete_if {|k,v| [:api_key, :api_action].include?(k) }
+    result = Crack::JSON.parse(HTTParty.get(api_url, :query => { :api_key => api_key, :api_action => action }.merge(data)))
+    raise "Error completing request [#{action}] with data [#{data.inspect}]: #{result["ERRORARRAY"].join(" / ")}" if result and result["ERRORARRAY"] and ! result["ERRORARRAY"].empty?
+    reformat_response(result)
+  end
+  
   def test
     @test ||= Linode::Test.new(:api_key => api_key)
   end
 
   def avail
     @avail ||= Linode::Avail.new(:api_key => api_key)
+  end
+  
+  protected
+  
+  def reformat_response(response)
+    result = response['DATA']
+    result.keys.each do |k| 
+      result[k.downcase] = result[k]
+      result.delete(k) if k != k.downcase
+    end
+    OpenStruct.new(result)
   end
 end
 
