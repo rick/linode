@@ -2,7 +2,9 @@ Linode Ruby API
 
 INSTALLATION:
 
- % sudo gem install rick-linode
+ Make sure gemcutter.org is in your gem sources list, then:
+
+ % sudo gem install linode
 
  To run tests you will need both rspec and mocha installed.
 
