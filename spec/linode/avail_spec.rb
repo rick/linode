@@ -11,7 +11,7 @@ describe Linode::Avail do
     @linode.class.should < Linode
   end
   
-  %w(datacenters kernels linodeplans distributions).each do |action|
+  %w(datacenters kernels linodeplans distributions stackscripts).each do |action|
     it "should allow accessing the #{action} API" do
       @linode.should respond_to(action.to_sym)
     end

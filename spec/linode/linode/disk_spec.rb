@@ -11,7 +11,7 @@ describe Linode::Linode::Disk do
     @linode.class.should < Linode
   end
   
-  %w(update create list createfromdistribution duplicate delete resize).each do |action|
+  %w(update create list createfromdistribution createfromstackscript duplicate delete resize).each do |action|
     it "should allow accessing the #{action} API" do
       @linode.should respond_to(action.to_sym)
     end
