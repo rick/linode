@@ -11,6 +11,9 @@ Spec::Rake::SpecTask.new('spec') do |t|
   t.spec_files = FileList['spec/**/*_spec.rb']
 end
 
+desc 'Test the linode library.'
+task :test => :spec
+
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gemspec|
