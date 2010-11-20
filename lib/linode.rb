@@ -37,7 +37,7 @@ class Linode
     end
   end
   
-  has_namespace :test, :avail, :user, :unauthenticated_user, :domain, :linode
+  has_namespace :test, :avail, :user, :domain, :linode
   
   def initialize(args)
     if args.include?(:api_key)
