@@ -15,6 +15,16 @@ class Linode
     end
   end
   
+  def self.has_unauthenticated_method(*actions)
+    actions.each do |action|
+      define_method(action.to_sym) do |*data|
+        data = data.shift if data
+        data ||= {}
+        send_unauthenticated_request(self.class.name.downcase.sub(/^linode::/, '').gsub(/::/, '.') + ".#{action}", data)
+      end
+    end
+  end
+  
   def self.has_namespace(*namespaces)
     namespaces.each do |namespace|
       define_method(namespace.to_sym) do ||
@@ -27,24 +37,37 @@ class Linode
     end
   end
   
-  has_namespace :test, :avail, :user, :domain, :linode
+  has_namespace :test, :avail, :user, :unauthenticated_user, :domain, :linode
   
   def initialize(args)
-    raise ArgumentError, ":api_key is required" unless args[:api_key]
-    @api_key = args[:api_key]
-    @api_url = args[:api_url] if args[:api_url]
+    if args.include?(:api_key)
+      @api_key = args[:api_key]
+      @api_url = args[:api_url] if args[:api_url]
+    elsif args.include?(:username) and args.include?(:password)
+      @api_url = args[:api_url] if args[:api_url]
+      result = send_unauthenticated_request("user.getapikey", { :username => args[:username], :password => args[:password] })
+      @api_key = result.api_key
+    else
+      raise ArgumentError, "Either :api_key, or both :username and :password, are required"
+    end
   end
-    
+
   def api_url
     @api_url || 'https://api.linode.com/'
   end
 
   def send_request(action, data)
-    data.delete_if {|k,v| [:api_key, :api_action, :api_responseFormat].include?(k) }
-    result = Crack::JSON.parse(HTTParty.get(api_url, :query => { :api_key => api_key, :api_action => action, :api_responseFormat => 'json' }.merge(data)))
+    data.delete_if {|k,v| [:api_key ].include?(k) }
+    send_unauthenticated_request(action, { :api_key => api_key }.merge(data))
+  end
+
+  def send_unauthenticated_request(action, data)
+    data.delete_if {|k,v| [ :api_action, :api_responseFormat].include?(k) }
+    result = Crack::JSON.parse(HTTParty.get(api_url, :query => { :api_action => action, :api_responseFormat => 'json' }.merge(data)))
     raise "Errors completing request [#{action}] @ [#{api_url}] with data [#{data.inspect}]:\n#{error_message(result, action)}" if error?(result)
     reformat_response(result)
   end
+
  
   protected
   

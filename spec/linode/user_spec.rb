@@ -26,17 +26,17 @@ describe Linode::User do
       end
     
       it "should request the user.#{action} action" do
-        @linode.expects(:send_request).with {|api_action, data| api_action == "user.#{action}" }
+        @linode.expects(:send_unauthenticated_request).with {|api_action, data| api_action == "user.#{action}" }
         @linode.send(action.to_sym)
       end
     
       it 'should provide the data hash when making its request' do
-        @linode.expects(:send_request).with {|api_action, data| data = { :foo => :bar } }
+        @linode.expects(:send_unauthenticated_request).with {|api_action, data| data = { :foo => :bar } }
         @linode.send(action.to_sym, {:foo => :bar})
       end
     
       it 'should return the result of the request' do
-        @linode.expects(:send_request).returns(:bar => :baz)      
+        @linode.expects(:send_unauthenticated_request).returns(:bar => :baz)      
         @linode.send(action.to_sym).should == { :bar => :baz }      
       end
     end

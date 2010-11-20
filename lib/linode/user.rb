@@ -1,3 +1,3 @@
 class Linode::User < Linode
-  has_method :getapikey
+  has_unauthenticated_method :getapikey
 end
