@@ -1,14 +1,14 @@
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
-require 'spec/rake/spectask'
+require 'rspec/core/rake_task'
 
 desc 'Default: run specs.'
 task :default => :spec
 
 desc 'Test the linode library.'
-Spec::Rake::SpecTask.new('spec') do |t|
-  t.spec_files = FileList['spec/**/*_spec.rb']
+RSpec::Core::RakeTask.new('spec') do |t|
+  t.pattern = 'spec/**/*_spec.rb'
 end
 
 desc 'Test the linode library.'
