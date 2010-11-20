@@ -3,6 +3,14 @@ require 'ostruct'
 require 'httparty'
 
 class Linode
+  BOOT_FAILED   = -2,          # Boot Failed
+  BUILDING      = -1,          # Being Created
+  PENDING       = 0,           # Brand New
+  RUNNING       = 1,           # Running
+  TERMINATED    = 2,           # Powered Off
+  SHUTTING_DOWN = 3,           # Shutting Down
+  RESERVED      = 4            # Reserved
+
   attr_reader :api_key
   
   def self.has_method(*actions)
