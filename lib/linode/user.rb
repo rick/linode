@@ -1,3 +1,5 @@
 class Linode::User < Linode
-  has_method :getapikey
+  def getapikey
+    api_key
+  end
 end

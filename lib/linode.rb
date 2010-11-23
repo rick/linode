@@ -3,7 +3,7 @@ require 'ostruct'
 require 'httparty'
 
 class Linode
-  attr_reader :api_key
+  attr_reader :username, :password
   
   def self.has_method(*actions)
     actions.each do |action|
@@ -30,23 +30,44 @@ class Linode
   has_namespace :test, :avail, :user, :domain, :linode
   
   def initialize(args)
-    raise ArgumentError, ":api_key is required" unless args[:api_key]
-    @api_key = args[:api_key]
     @api_url = args[:api_url] if args[:api_url]
+    
+    if args.include?(:api_key)
+      @api_key = args[:api_key]
+    elsif args.include?(:username) and args.include?(:password)
+      @username = args[:username]
+      @password = args[:password]
+    else
+      raise ArgumentError, "Either :api_key, or both :username and :password, are required."
+    end
   end
     
   def api_url
     @api_url || 'https://api.linode.com/'
   end
 
+  def api_key
+    @api_key ||= fetch_api_key
+  end
+  
   def send_request(action, data)
     data.delete_if {|k,v| [:api_key, :api_action, :api_responseFormat].include?(k) }
-    result = Crack::JSON.parse(HTTParty.get(api_url, :query => { :api_key => api_key, :api_action => action, :api_responseFormat => 'json' }.merge(data)))
-    raise "Errors completing request [#{action}] @ [#{api_url}] with data [#{data.inspect}]:\n#{error_message(result, action)}" if error?(result)
-    reformat_response(result)
+    response = get({ :api_key => api_key, :api_action => action, :api_responseFormat => 'json' }.merge(data))
+    raise "Errors completing request [#{action}] @ [#{api_url}] with data [#{data.inspect}]:\n#{error_message(response, action)}" if error?(response)
+    reformat_response(response)
   end
  
   protected
+  
+  def fetch_api_key
+    response = get(:api_action => 'user.getapikey', :api_responseFormat => 'json', :username => username, :password => password)
+    raise "Errors completing request [user.getapikey] @ [#{api_url}] for username [#{username}]:\n#{error_message(response, 'user.getapikey')}" if error?(response)
+    reformat_response(response).api_key
+  end
+  
+  def get(data)
+    Crack::JSON.parse(HTTParty.get(api_url, :query => data))
+  end
   
   def error?(response)
     response and response["ERRORARRAY"] and ! response["ERRORARRAY"].empty?
@@ -54,7 +75,8 @@ class Linode
   
   def error_message(response, action)
     response["ERRORARRAY"].collect { |err|
-      "  - Error \##{err["ERRORCODE"]} - #{err["ERRORMESSAGE"]}.  (Please consult http://www.linode.com/api/autodoc.cfm?method=#{action})"
+      "  - Error \##{err["ERRORCODE"]} - #{err["ERRORMESSAGE"]}.  "+
+      "(Please consult http://www.linode.com/api/autodoc.cfm?method=#{action})"
     }.join("\n")
   end
   
