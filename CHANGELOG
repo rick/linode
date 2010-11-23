@@ -1,3 +1,8 @@
+
+0.6.3 / 2010-11-23 
+==================
+  * Can now initialize w/ username/pass; also support for user.getapikey API call
+
 2010-11-21	Rick Bradley <rick@rickbradley.com>
 	* Adding rspec2 support for autotest
 	* Continuing conversion of spec_helper for rspec2
