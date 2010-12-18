@@ -15,8 +15,16 @@ describe Linode do
       it 'should require an arguments hash' do
         lambda { Linode.new }.should raise_error(ArgumentError)
       end
-
-      it 'should fail if no API key is given' do
+      
+      it 'should not fail if an API key is given' do
+        lambda { Linode.new({ :api_key => 'foo' }) }.should_not raise_error(ArgumentError)        
+      end
+      
+      it 'should not fail if a username/password combo is given' do
+        lambda { Linode.new({ :username => 'bar', :password => 'baz' }) }.should_not raise_error(ArgumentError)        
+      end
+      
+      it 'should fail if no API key nor username/password combo is given' do
         lambda { Linode.new({}) }.should raise_error(ArgumentError)        
       end
       
@@ -31,26 +39,89 @@ describe 'Linode' do
   before :each do
     @api_key = 'foo'
     @api_url = 'https://fake.linode.com/'
+    @username = 'bar'
+    @password = 'baz'
     @linode = Linode.new(:api_key => @api_key, :api_url => @api_url)
   end
   
-  it 'should be able to return the API key provided at creation time' do
-    @linode.api_key.should == 'foo'
-  end
-  
-  it 'should be able to return the current API URL' do
-    @linode.should respond_to(:api_url)
-  end
-  
-  describe 'when returning the current API URL' do
-    it 'should return the API URL provided at creation time if one was provided' do
-      @linode = Linode.new(:api_key => @api_key, :api_url => 'https://fake.linode.com/')
-      @linode.api_url.should == 'https://fake.linode.com/'
+  describe 'when initialized with username and password' do
+    before :each do
+      @linode = Linode.new(:username => @username, :password => @password, :api_url => @api_url)
     end
     
-    it 'should return the stock linode API URL if none was provided at creation time' do
-      @linode = Linode.new(:api_key => @api_key)
-      @linode.api_url.should == 'https://api.linode.com/'      
+    it 'should be able to return the username provided at creation time' do
+      @linode.username.should == 'bar'      
+    end
+
+    it 'should be able to return the password provided at creation time' do
+      @linode.password.should == 'baz'
+    end
+
+    describe 'when returning the current API URL' do
+      it 'should return the API URL provided at creation time if one was provided' do
+        @linode.api_url.should == 'https://fake.linode.com/'
+      end
+
+      it 'should return the stock linode API URL if none was provided at creation time' do
+        @linode = Linode.new(:username => @username, :password => @api_url)
+        @linode.api_url.should == 'https://api.linode.com/'      
+      end
+    end
+
+    it 'should use the user.getapikey remote call to look up the API key associated with the username/password combo specified at creation time' do
+      @json = '{"ERRORARRAY":[],"DATA":{"USERNAME":"ogc","API_KEY":"blahblahblah"},"ACTION":"user.getapikey"}'
+      HTTParty.expects(:get).with(@api_url, 
+        :query => { 
+          :api_action => 'user.getapikey', 
+          :api_responseFormat => 'json', 
+          :username => @username, 
+          :password => @password 
+        }
+      ).returns(@json)
+      @linode.api_key
+    end
+
+    it 'should return the API key associated with the username/password combo specified at creation time' do
+      @linode.stubs(:fetch_api_key).returns(@api_key)
+      @linode.api_key.should == @api_key
+    end
+    
+    it 'should fail when looking up the API key if API key remote lookup fails' do
+      @linode.stubs(:fetch_api_key).raises
+      lambda { @linode.api_key }.should raise_error
+    end
+    
+    it 'should cache API key remote lookups for later use' do
+      @linode.stubs(:fetch_api_key).returns(@api_key)
+      @linode.api_key
+      @linode.stubs(:fetch_api_key).raises
+      @linode.api_key.should == @api_key
+    end
+  end
+  
+  describe 'when initialized with API key' do
+    it 'should return a nil username' do
+      @linode.username.should be_nil
+    end
+    
+    it 'should return a nil password' do
+      @linode.password.should be_nil
+    end
+    
+    it 'should be able to return the API key provided at creation time' do
+      @linode.api_key.should == 'foo'
+    end
+
+    describe 'when returning the current API URL' do
+      it 'should return the API URL provided at creation time if one was provided' do
+        @linode = Linode.new(:api_key => @api_key, :api_url => 'https://fake.linode.com/')
+        @linode.api_url.should == 'https://fake.linode.com/'
+      end
+
+      it 'should return the stock linode API URL if none was provided at creation time' do
+        @linode = Linode.new(:api_key => @api_key)
+        @linode.api_url.should == 'https://api.linode.com/'      
+      end
     end
   end
   

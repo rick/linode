@@ -15,6 +15,7 @@ describe Linode::User do
     @linode.should respond_to(:getapikey)
   end
   
+<<<<<<< HEAD
     describe "when accessing the #{action} API" do
       it 'should allow a data hash' do
         lambda { @linode.send(action.to_sym, {}) }.should_not raise_error(ArgumentError)
@@ -38,7 +39,7 @@ describe Linode::User do
         @linode.expects(:send_unauthenticated_request).returns(:bar => :baz)      
         @linode.send(action.to_sym).should == { :bar => :baz }      
       end
-    end
+=======
   describe 'when returning the API key for the connection' do
     it 'should work without arguments' do
       lambda { @linode.getapikey }.should_not raise_error(ArgumentError)
@@ -51,6 +52,7 @@ describe Linode::User do
     it 'should return the api_key via the Linode handle' do
       @linode.stubs(:api_key).returns('foo')
       @linode.getapikey.should == 'foo'
+>>>>>>> upstream/master
     end
   end
 end

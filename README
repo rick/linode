@@ -138,3 +138,6 @@ Here is an annoyingly exhaustive IRB session where I play around with the API:
  irb> l.linode.ip.list(:LinodeId => 12446)
  => [#<OpenStruct rdns_name="byggvir.websages.com", ipaddressid=12286, linodeid=12446, ispublic=1, ipaddress="209.123.234.161">, #<OpenStruct rdns_name="li101-51.members.linode.com", ipaddressid=23981, linodeid=12446, ispublic=1, ipaddress="97.107.140.51">]
  irb> ^D@ Wed Aug 05 01:50:52 rick@Yer-Moms-Computer
+
+CREDITS:
+ - Thanks to Aaron Hamid for updates for RSpec 2 and work on user.getapikey + username/password initialization.

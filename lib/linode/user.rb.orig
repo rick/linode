@@ -1,0 +1,10 @@
+class Linode::User < Linode
+<<<<<<< HEAD
+  has_unauthenticated_method :getapikey
+end
+=======
+  def getapikey
+    api_key
+  end
+end
+>>>>>>> upstream/master

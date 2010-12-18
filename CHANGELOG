@@ -1,2 +1,80 @@
 
- * 2009/08/04 - Initial commit.
+0.6.3 / 2010-11-23 
+==================
+  * Can now initialize w/ username/pass; also support for user.getapikey API call
+
+2010-11-21	Rick Bradley <rick@rickbradley.com>
+	* Adding rspec2 support for autotest
+	* Continuing conversion of spec_helper for rspec2
+	* moving spec/spec.opts to /.rspec
+
+2010-11-21	Aaron Hamid <aaron.hamid@gmail.com>
+	* did the minimal amount necessary to get tests to run on latest RSpec release; https://github.com/rick/linode/issues#issue/3
+
+2010-08-03	Rick Bradley <rick@rickbradley.com>
+	* updating gemspec for 0.6.2
+	* Version bump to 0.6.2
+	* remove Jeweler warning as noone else needs to ever see it, basically
+	* make 'rake test' an alias for 'rake spec'
+
+2010-03-31	Rick Bradley <rick@rickbradley.com>
+	* updated gemspec
+	* Version bump to 0.6.1
+	* Missed a couple new Linode API stackscript bits.
+
+2010-03-27	Rick Bradley <rick@rickbradley.com>
+	* Merge branch 'newgem'
+	* updating gemspec
+	* Regenerated gemspec for version 0.6.0
+	* Version bump to 0.6.0
+	* adding support for stackscript API
+
+2009-12-21	Rick Bradley <rick@rickbradley.com>
+	* updating README (thx dvyjones!)
+
+2009-12-20	Rick Bradley <rick@rickbradley.com>
+	* updated gemspec
+	* Version bump to 0.5.4
+	* enabling GemCutter support for our gem
+
+2009-08-05	Rick Bradley <rick@rickbradley.com>
+	* new gemspec
+	* Version bump to 0.5.3
+	* make error messages much more helpful, including link to relevant API page.
+	* fixing mis-named spec example descriptions for nested namespaces
+	* updating gemspec
+	* Version bump to 0.5.2
+	* tiny tweak to use has_namespace instead of an old literal method declaration
+	* updating gemspec
+	* Version bump to 0.5.1
+	* making sure rake actually runs specs; adding httparty gem dependency
+	* Version bump to 0.5.0
+	* adding Jeweler recipe, gemspec, etc.
+	* README now has examples.
+	* Linode.Ip API
+	* Linode.Job API
+	* Linode.Disk API
+	* Linode.Config API
+	* the Linode
+	* more metaprogramming, now that we know how a namespace behaves
+	* Domain.Resource nested API
+	* cleaning up missed example description change
+	* metprogramming avail, user, test APIs
+	* adding domain spec; using domain spec to introduce has_method metaprogramming
+	* adding User API
+	* making the data -> object(s) conversion more robust
+	* Avail API specs and methods
+	* metaprogramming the Test API specs, for later use in other specs
+	* first working version of a simple request (test.echo)
+	* adding httparty dependency to README
+
+2009-08-04	Rick Bradley <rick@rickbradley.com>
+	* set real API URL, allow overriding
+	* Adding basic request method to base class.
+	* trivial testing dependencies in README
+	* add Avail API hook, reorganize how subclass specs are stored
+	* nest namespace classes, automate discovery
+	* making a way to access our simplest API (Linode.test)
+	* Linode.new.
+	* initial commit.
+
