@@ -28,5 +28,9 @@ describe Linode::User do
       @linode.stubs(:api_key).returns('foo')
       @linode.getapikey.should == 'foo'
     end
+      
+    it "should consider the documentation to live at http://www.linode.com/api/utility/user.getapikey" do
+      @linode.documentation_path(Linode.action_path(@linode.class.name, 'getapikey')).should == "http://www.linode.com/api/utility/user.getapikey"
+    end
   end
 end
