@@ -70,8 +70,8 @@ describe 'Linode' do
 
     it 'should use the user.getapikey remote call to look up the API key associated with the username/password combo specified at creation time' do
       @json = '{"ERRORARRAY":[],"DATA":{"USERNAME":"ogc","API_KEY":"blahblahblah"},"ACTION":"user.getapikey"}'
-      HTTParty.expects(:get).with(@api_url, 
-        :query => { 
+      HTTParty.expects(:post).with(@api_url, 
+        :body => { 
           :api_action => 'user.getapikey', 
           :api_responseFormat => 'json', 
           :username => @username, 
@@ -136,7 +136,7 @@ describe 'Linode' do
       		"ACTION":"test.echo",
       		"DATA":{"FOO":"bar"}
       	}!
-      HTTParty.stubs(:get).returns(@json)
+      HTTParty.stubs(:post).returns(@json)
       @linode.stubs(:api_url).returns('https://fake.linode.com/')
     end
     
@@ -150,63 +150,63 @@ describe 'Linode' do
     
     it 'should make a request to the API url' do
       @linode.stubs(:api_url).returns('https://fake.linode.com/')
-      HTTParty.expects(:get).with { |path, args|
+      HTTParty.expects(:post).with { |path, args|
         path == 'https://fake.linode.com/'
       }.returns(@json)
       @linode.send_request('test.echo', { })
     end
     
     it 'should provide the API key when making its request' do
-      HTTParty.expects(:get).with { |path, args|
-        args[:query][:api_key] == @api_key
+      HTTParty.expects(:post).with { |path, args|
+        args[:body][:api_key] == @api_key
       }.returns(@json)
       @linode.send_request('test.echo', { })      
     end
     
     it 'should set the designated request method as the HTTP API action' do
-      HTTParty.expects(:get).with { |path, args|
-        args[:query][:api_action] == 'test.echo'
+      HTTParty.expects(:post).with { |path, args|
+        args[:body][:api_action] == 'test.echo'
       }.returns(@json)
       @linode.send_request('test.echo', { })            
     end
     
     it 'should set the response format to JSON' do
-      HTTParty.expects(:get).with { |path, args|
-        args[:query][:api_responseFormat] == 'json'
+      HTTParty.expects(:post).with { |path, args|
+        args[:body][:api_responseFormat] == 'json'
       }.returns(@json)
       @linode.send_request('test.echo', { })      
     end
     
     it 'should provide the data hash to the HTTP API request' do
-      HTTParty.expects(:get).with { |path, args|
-        args[:query]['foo'] == 'bar'
+      HTTParty.expects(:post).with { |path, args|
+        args[:body]['foo'] == 'bar'
       }.returns(@json)
       @linode.send_request('test.echo', { 'foo' => 'bar' })                  
     end
     
     it 'should not allow overriding the API key via the data hash' do
-      HTTParty.expects(:get).with { |path, args|
-        args[:query][:api_key] == @api_key
+      HTTParty.expects(:post).with { |path, args|
+        args[:body][:api_key] == @api_key
       }.returns(@json)
       @linode.send_request('test.echo', { :api_key => 'h4x0r' })                        
     end
     
     it 'should not allow overriding the API action via the data hash' do
-      HTTParty.expects(:get).with { |path, args|
-        args[:query][:api_action] == 'test.echo'
+      HTTParty.expects(:post).with { |path, args|
+        args[:body][:api_action] == 'test.echo'
       }.returns(@json)
       @linode.send_request('test.echo', { :api_action => 'h4x0r' })
     end
     
     it 'should not allow overriding the API response format via the data hash' do
-      HTTParty.expects(:get).with { |path, args|
-        args[:query][:api_responseFormat] == 'json'
+      HTTParty.expects(:post).with { |path, args|
+        args[:body][:api_responseFormat] == 'json'
       }.returns(@json)
       @linode.send_request('test.echo', { :api_responseFormat => 'h4x0r' })
     end
     
     it 'should fail when the request submission fails' do
-      HTTParty.stubs(:get).returns(%Q!{
+      HTTParty.stubs(:post).returns(%Q!{
       		"ERRORARRAY":["failure"],
       		"ACTION":"test.echo",
       		"DATA":{"foo":"bar"}
@@ -216,7 +216,7 @@ describe 'Linode' do
     
     describe 'when the result is a list of hashes' do
       it 'should return a list of objects with lower-cased methods for the data fields' do
-        HTTParty.stubs(:get).returns(%Q!{
+        HTTParty.stubs(:post).returns(%Q!{
         		"ERRORARRAY":[],
         		"ACTION":"test.echo",
         		"DATA":[{"FOO":"bar"},{"BAR":"baz"}]
@@ -226,7 +226,7 @@ describe 'Linode' do
       end
       
       it 'should return a list of objects which do not respond to upper-case URLs for the data fields' do
-        HTTParty.stubs(:get).returns(%Q!{
+        HTTParty.stubs(:post).returns(%Q!{
         		"ERRORARRAY":[],
         		"ACTION":"test.echo",
         		"DATA":[{"FOO":"bar"},{"BAR":"baz"}]
@@ -248,7 +248,7 @@ describe 'Linode' do
     
     describe 'when the result is neither a list nor a hash' do
       it 'should return the result unchanged' do
-        HTTParty.stubs(:get).returns(%Q!{
+        HTTParty.stubs(:post).returns(%Q!{
         		"ERRORARRAY":[],
         		"ACTION":"test.echo",
         		"DATA":"thingie"
