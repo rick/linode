@@ -10,7 +10,7 @@ class Linode
       define_method(action.to_sym) do |*data|
         data = data.shift if data
         data ||= {}
-        send_request(self.class.name.downcase.sub(/^linode::/, '').gsub(/::/, '.') + ".#{action}", data)
+        send_request(Linode.action_path(self.class.name, action), data)
       end
     end
   end
@@ -28,6 +28,29 @@ class Linode
   end
   
   has_namespace :test, :avail, :user, :domain, :linode
+  
+  @@documentation_category = {}
+  
+  def self.documentation_category(category)
+    @@documentation_category[class_to_path(name)] = category
+  end
+  
+  def documentation_categories
+    @@documentation_category
+  end
+  
+  def self.action_path(class_name, action)
+    Linode.class_to_path(class_name) + ".#{action}"
+  end
+  
+  def self.class_to_path(class_name)
+    class_name.downcase.sub(/^linode::/, '').gsub(/::/, '.')
+  end
+  
+  def documentation_path(action)
+     hits = action.match(/^(.*)\.[^.]+$/)
+    "http://www.linode.com/api/" + @@documentation_category[hits[1]] + '/' + action
+  end
   
   def initialize(args)
     @api_url = args[:api_url] if args[:api_url]
@@ -76,7 +99,7 @@ class Linode
   def error_message(response, action)
     response["ERRORARRAY"].collect { |err|
       "  - Error \##{err["ERRORCODE"]} - #{err["ERRORMESSAGE"]}.  "+
-      "(Please consult http://www.linode.com/api/autodoc.cfm?method=#{action})"
+      "(Please consult #{documentation_path(action)})"
     }.join("\n")
   end
   
