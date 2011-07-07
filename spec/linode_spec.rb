@@ -417,5 +417,37 @@ describe 'Linode' do
       linode.linode.should == result
     end
   end
+
+  it 'should be able to provide access to the Linode Nodebalancer API' do
+    @linode.should respond_to(:nodebalancer)
+  end
+  
+  describe 'when providing access to the Linode Nodebalancer API' do
+    it 'should allow no arguments' do
+      lambda { @linode.nodebalancer }.should_not raise_error(ArgumentError)
+    end
+    
+    it 'should require no arguments' do
+      lambda { @linode.nodebalancer(:foo) }.should raise_error(ArgumentError)
+    end
+    
+    it 'should return a Linode::Nodebalancer instance' do
+      @linode.nodebalancer.class.should == Linode::Nodebalancer
+    end
+    
+    it 'should set the API key on the Linode::Nodebalancer instance to be our API key' do
+      @linode.nodebalancer.api_key.should == @api_key
+    end
+    
+    it 'should set the API url on the Linode::Nodebalancer instance to be our API url' do
+      @linode.nodebalancer.api_url.should == @api_url
+    end
+    
+    it 'should return the same Linode::Nodebalancer instance when called again' do
+      linode = Linode.new(:api_key => @api_key)
+      result = linode.nodebalancer
+      linode.nodebalancer.should == result
+    end
+  end
 end
 
