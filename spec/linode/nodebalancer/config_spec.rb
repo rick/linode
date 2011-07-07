@@ -1,17 +1,17 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper.rb')
 require 'linode'
 
-describe Linode::Linode::Config do
+describe Linode::Nodebalancer::Config do
   before :each do
     @api_key = 'foo'
-    @linode = Linode::Linode::Config.new(:api_key => @api_key)
+    @linode = Linode::Nodebalancer::Config.new(:api_key => @api_key)
   end
   
   it 'should be a Linode instance' do
     @linode.class.should < Linode
   end
   
-  %w(update create list delete).each do |action|
+  %w(create delete update list).each do |action|
     it "should allow accessing the #{action} API" do
       @linode.should respond_to(action.to_sym)
     end
@@ -25,8 +25,8 @@ describe Linode::Linode::Config do
         lambda { @linode.send(action.to_sym) }.should_not raise_error(ArgumentError)      
       end
     
-      it "should request the avail.#{action} action" do
-        @linode.expects(:send_request).with {|api_action, data| api_action == "linode.config.#{action}" }
+      it "should request the nodebalancer.config.#{action} action" do
+        @linode.expects(:send_request).with {|api_action, data| api_action == "nodebalancer.config.#{action}" }
         @linode.send(action.to_sym)
       end
     
@@ -40,8 +40,8 @@ describe Linode::Linode::Config do
         @linode.send(action.to_sym).should == { :bar => :baz }      
       end
       
-      it "should consider the documentation to live at http://www.linode.com/api/linode/linode.config.#{action}" do
-        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "http://www.linode.com/api/linode/linode.config.#{action}"
+      it "should consider the documentation to live at http://www.linode.com/api/nodebalancer/nodebalancer.config.#{action}" do
+        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "http://www.linode.com/api/nodebalancer/nodebalancer.config.#{action}"
       end
     end
   end

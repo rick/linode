@@ -140,4 +140,5 @@ Here is an annoyingly exhaustive IRB session where I play around with the API:
  irb> ^D@ Wed Aug 05 01:50:52 rick@Yer-Moms-Computer
 
 CREDITS:
+ - Thanks to Dan Hodos (github: danhodos) for diagnosing and fixing an issue with sending GET requests instead of POST request.
  - Thanks to Aaron Hamid for updates for RSpec 2 and work on user.getapikey + username/password initialization.

@@ -1,4 +1,11 @@
 
+0.7.0 / 2011-07-07
+==================
+  * Added support for Nodebalancer API calls
+  * Changed HTTP GETs to HTTP POSTs to work around errors with large stackscripts (credit: Dan Hodos)
+  * Updated documentation references in error messages to match API documentation on Linode website
+
+
 0.6.3 / 2010-11-23 
 ==================
   * Can now initialize w/ username/pass; also support for user.getapikey API call

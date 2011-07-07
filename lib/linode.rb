@@ -10,7 +10,7 @@ class Linode
       define_method(action.to_sym) do |*data|
         data = data.shift if data
         data ||= {}
-        send_request(self.class.name.downcase.sub(/^linode::/, '').gsub(/::/, '.') + ".#{action}", data)
+        send_request(Linode.action_path(self.class.name, action), data)
       end
     end
   end
@@ -27,7 +27,30 @@ class Linode
     end
   end
   
-  has_namespace :test, :avail, :user, :domain, :linode
+  has_namespace :test, :avail, :user, :domain, :linode, :nodebalancer
+  
+  @@documentation_category = {}
+  
+  def self.documentation_category(category)
+    @@documentation_category[class_to_path(name)] = category
+  end
+  
+  def documentation_categories
+    @@documentation_category
+  end
+  
+  def self.action_path(class_name, action)
+    Linode.class_to_path(class_name) + ".#{action}"
+  end
+  
+  def self.class_to_path(class_name)
+    class_name.downcase.sub(/^linode::/, '').gsub(/::/, '.')
+  end
+  
+  def documentation_path(action)
+     hits = action.match(/^(.*)\.[^.]+$/)
+    "http://www.linode.com/api/" + @@documentation_category[hits[1]] + '/' + action
+  end
   
   def initialize(args)
     @api_url = args[:api_url] if args[:api_url]
@@ -52,7 +75,7 @@ class Linode
   
   def send_request(action, data)
     data.delete_if {|k,v| [:api_key, :api_action, :api_responseFormat].include?(k) }
-    response = get({ :api_key => api_key, :api_action => action, :api_responseFormat => 'json' }.merge(data))
+    response = post({ :api_key => api_key, :api_action => action, :api_responseFormat => 'json' }.merge(data))
     raise "Errors completing request [#{action}] @ [#{api_url}] with data [#{data.inspect}]:\n#{error_message(response, action)}" if error?(response)
     reformat_response(response)
   end
@@ -60,13 +83,13 @@ class Linode
   protected
   
   def fetch_api_key
-    response = get(:api_action => 'user.getapikey', :api_responseFormat => 'json', :username => username, :password => password)
+    response = post(:api_action => 'user.getapikey', :api_responseFormat => 'json', :username => username, :password => password)
     raise "Errors completing request [user.getapikey] @ [#{api_url}] for username [#{username}]:\n#{error_message(response, 'user.getapikey')}" if error?(response)
     reformat_response(response).api_key
   end
   
-  def get(data)
-    Crack::JSON.parse(HTTParty.get(api_url, :query => data))
+  def post(data)
+    Crack::JSON.parse(HTTParty.post(api_url, :body => data))
   end
   
   def error?(response)
@@ -76,7 +99,7 @@ class Linode
   def error_message(response, action)
     response["ERRORARRAY"].collect { |err|
       "  - Error \##{err["ERRORCODE"]} - #{err["ERRORMESSAGE"]}.  "+
-      "(Please consult http://www.linode.com/api/autodoc.cfm?method=#{action})"
+      "(Please consult #{documentation_path(action)})"
     }.join("\n")
   end
   
