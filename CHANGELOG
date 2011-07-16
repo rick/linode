@@ -1,3 +1,7 @@
+0.7.1 / 2011-07-16
+==================
+  * Properly nest stackscript namespace under the Linode namespace (Aditya Sanghi)
+
 
 0.7.0 / 2011-07-07
 ==================
