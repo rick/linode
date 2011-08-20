@@ -2,6 +2,8 @@ require 'rubygems'
 require 'ostruct'
 require 'httparty'
 
+OpenStruct.__send__(:define_method, :type) { @table[:type] }
+
 class Linode
   attr_reader :username, :password
   
