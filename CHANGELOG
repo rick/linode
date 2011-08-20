@@ -1,5 +1,5 @@
 
-0.7.2 / 2011-08-20 
+0.7.3 / 2011-08-20 
 ==================
 
   * fixing OStruct issue with #type calls on returned result data (thanks to musfuut <musfuut@goldentog.com>)
