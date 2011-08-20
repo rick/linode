@@ -45,4 +45,9 @@ describe Linode::Linode::Disk do
       end
     end
   end
+  
+  it 'should allow retrieving the disk type from disks in the "list" results' do
+    @linode.stubs(:post).returns('DATA' => { 'TYPE' => 'foo' })
+    @linode.list.type.should == 'foo'
+  end
 end

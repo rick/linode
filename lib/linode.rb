@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'ostruct'
+require 'ostruct_tweak'
 require 'httparty'
 
 class Linode
