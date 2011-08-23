@@ -2,7 +2,7 @@
 0.7.3 / 2011-08-20 
 ==================
 
-  * fixing OStruct issue with #type calls on returned result data (thanks to musfuut <musfuut@goldentog.com>)
+  * fixing OStruct issue with #type calls on returned result data (thanks to musfuut <musfuut_rb@goldentog.com>)
   * set up for travis-CI integration builds
   
 0.7.1 / 2011-07-16
