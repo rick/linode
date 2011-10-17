@@ -1,4 +1,9 @@
 
+n.n.n / 2011-10-17
+==================
+
+  * Adds support for linode.ip.addprivate API method (thanks to Adam Durana)
+
 0.7.6 / 2011-10-17
 ==================
 
