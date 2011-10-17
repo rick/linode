@@ -4,14 +4,14 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |s|
-  s.name = %q{linode}
-  s.version = "0.7.5"
+  s.name = "linode"
+  s.version = "0.7.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rick Bradley"]
-  s.date = %q{2011-08-23}
-  s.description = %q{This is a wrapper around Linode's automation facilities.}
-  s.email = %q{rick@rickbradley.com}
+  s.date = "2011-10-17"
+  s.description = "This is a wrapper around Linode's automation facilities."
+  s.email = "rick@rickbradley.com"
   s.extra_rdoc_files = [
     "README"
   ]
@@ -59,43 +59,30 @@ Gem::Specification.new do |s|
     "spec/linode_spec.rb",
     "spec/spec_helper.rb"
   ]
-  s.homepage = %q{http://github.com/rick/linode}
+  s.homepage = "http://github.com/rick/linode"
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.7}
-  s.summary = %q{a Ruby wrapper for the Linode API}
-  s.test_files = [
-    "spec/linode/avail_spec.rb",
-    "spec/linode/domain/resource_spec.rb",
-    "spec/linode/domain_spec.rb",
-    "spec/linode/linode/config_spec.rb",
-    "spec/linode/linode/disk_spec.rb",
-    "spec/linode/linode/ip_spec.rb",
-    "spec/linode/linode/job_spec.rb",
-    "spec/linode/linode_spec.rb",
-    "spec/linode/nodebalancer/config_spec.rb",
-    "spec/linode/nodebalancer/node_spec.rb",
-    "spec/linode/nodebalancer_spec.rb",
-    "spec/linode/stackscript_spec.rb",
-    "spec/linode/test_spec.rb",
-    "spec/linode/user_spec.rb",
-    "spec/linode_spec.rb",
-    "spec/spec_helper.rb"
-  ]
+  s.rubygems_version = "1.8.10"
+  s.summary = "a Ruby wrapper for the Linode API"
 
   if s.respond_to? :specification_version then
-    current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<httparty>, [">= 0"])
+      s.add_runtime_dependency(%q<crack>, [">= 0"])
       s.add_runtime_dependency(%q<httparty>, [">= 0.4.4"])
+      s.add_runtime_dependency(%q<crack>, [">= 0.3.1"])
     else
       s.add_dependency(%q<httparty>, [">= 0"])
+      s.add_dependency(%q<crack>, [">= 0"])
       s.add_dependency(%q<httparty>, [">= 0.4.4"])
+      s.add_dependency(%q<crack>, [">= 0.3.1"])
     end
   else
     s.add_dependency(%q<httparty>, [">= 0"])
+    s.add_dependency(%q<crack>, [">= 0"])
     s.add_dependency(%q<httparty>, [">= 0.4.4"])
+    s.add_dependency(%q<crack>, [">= 0.3.1"])
   end
 end
 
