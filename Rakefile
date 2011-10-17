@@ -25,6 +25,7 @@ begin
     gemspec.homepage = "http://github.com/rick/linode"
     gemspec.authors = ["Rick Bradley"]
     gemspec.add_dependency('httparty', '>= 0.4.4')
+    gemspec.add_dependency('crack', '>= 0.3.1')
   end
   Jeweler::GemcutterTasks.new  
 rescue LoadError

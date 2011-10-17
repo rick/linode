@@ -143,5 +143,5 @@ CREDITS:
  - Thanks to Aditya Sanghi (github: asanghi) for a patch to properly namespace stackscripts functionality.
  - Thanks to Dan Hodos (github: danhodos) for diagnosing and fixing an issue with sending GET requests instead of POST request.
  - Thanks to Aaron Hamid for updates for RSpec 2 and work on user.getapikey + username/password initialization.
- - Thanks to Musfuut (github: musfuut) for diagnosing and recommending a fix for OpenStruct and 'type' data members in Linode returned results
-
+ - Thanks to Musfuut (github: musfuut) for diagnosing and recommending a fix for OpenStruct and 'type' data members in Linode returned results.
+ - Thanks to mihaibirsan (github: mihaibirsan) for diagnosing a problem with dependencies on the 'crack' library.
