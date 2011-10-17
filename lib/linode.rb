@@ -2,6 +2,7 @@ require 'rubygems'
 require 'ostruct'
 require 'ostruct_tweak'
 require 'httparty'
+require 'crack'
 
 class Linode
   attr_reader :username, :password
