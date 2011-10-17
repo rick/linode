@@ -145,3 +145,4 @@ CREDITS:
  - Thanks to Aaron Hamid for updates for RSpec 2 and work on user.getapikey + username/password initialization.
  - Thanks to Musfuut (github: musfuut) for diagnosing and recommending a fix for OpenStruct and 'type' data members in Linode returned results.
  - Thanks to mihaibirsan (github: mihaibirsan) for diagnosing a problem with dependencies on the 'crack' library.
+ - Thanks to Adam Durana (github: durana) for adding support for linode.ip.addprivate.

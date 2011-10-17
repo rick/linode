@@ -11,7 +11,7 @@ describe Linode::Linode::Ip do
     @linode.class.should < Linode
   end
   
-  %w(list).each do |action|
+  %w(list addprivate).each do |action|
     it "should allow accessing the #{action} API" do
       @linode.should respond_to(action.to_sym)
     end
