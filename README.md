@@ -140,9 +140,10 @@ Here is an annoyingly exhaustive IRB session where I play around with the API:
     irb> ^D@ Wed Aug 05 01:50:52 rick@Yer-Moms-Computer
 
 ## CREDITS:
-    * Thanks to Aditya Sanghi (github: asanghi) for a patch to properly namespace stackscripts functionality.
-    * Thanks to Dan Hodos (github: danhodos) for diagnosing and fixing an issue with sending GET requests instead of POST request.
-    * Thanks to Aaron Hamid for updates for RSpec 2 and work on user.getapikey + username/password initialization.
-    * Thanks to Musfuut (github: musfuut) for diagnosing and recommending a fix for OpenStruct and 'type' data members in Linode returned results.
-    * Thanks to mihaibirsan (github: mihaibirsan) for diagnosing a problem with dependencies on the 'crack' library.
-    * Thanks to Adam Durana (github: durana) for adding support for linode.ip.addprivate.
+
+* Thanks to Aditya Sanghi ([asanghi](http://github.com/asanghi)) for a patch to properly namespace stackscripts functionality.
+* Thanks to Dan Hodos ([danhodos](http://github.com/danhodos)) for diagnosing and fixing an issue with sending GET requests instead of POST request.
+* Thanks to Aaron Hamid for updates for RSpec 2 and work on user.getapikey + username/password initialization.
+* Thanks to Musfuut ([musfuut](http://github.com/musfuut)) for diagnosing and recommending a fix for OpenStruct and 'type' data members in Linode returned results.
+* Thanks to mihaibirsan ([mihaibirsan](http://github.com/mihaibirsan)) for diagnosing a problem with dependencies on the 'crack' library.
+* Thanks to Adam Durana ([durana](http://github.com/durana)) for adding support for linode.ip.addprivate.
