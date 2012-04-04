@@ -25,6 +25,7 @@ Here is an annoyingly exhaustive IRB session where I play around with the API:
     => #<OpenStruct baz="xyzzy", foo="bar">
     irb> result.foo
     => "bar"
+    
     irb> result.baz
     => "xyzzy"
  
@@ -125,12 +126,14 @@ Here is an annoyingly exhaustive IRB session where I play around with the API:
     irb> l.avail.distributions.size
     => 22
     irb> l.avail.distributions.first
-    => #<OpenStruct label="Arch Linux 2007.08", minimagesize=436, create_dt="2007-10-24 00:00:00.0", is64bit=0, distributionid=38>
+    => #<OpenStruct label="Arch Linux 2007.08", minimagesize=436, create_dt="2007-10-24 00:00:00.0", is64bit=0,
+    distributionid=38>
     irb> l.avail.distributions.first.label
     => "Arch Linux 2007.08"
 
     irb> l.domain.resource.list
-    RuntimeError: Error completing request [domain.resource.list] @ [https://api.linode.com/] with data [{}]: ERRORCODE6ERRORMESSAGEDOMAINID is required but was not passed in
+    RuntimeError: Error completing request [domain.resource.list] @ [https://api.linode.com/] with data [{}]:
+    ERRORCODE6ERRORMESSAGEDOMAINID is required but was not passed in
     	from ./lib/linode.rb:31:in `send_request'
     	from ./lib/linode.rb:13:in `list'
     	from (irb):3
@@ -225,6 +228,7 @@ Here is an annoyingly exhaustive IRB session where I play around with the API:
     	from ./lib/linode.rb:45:in `send_request'
     	from ./lib/linode.rb:13:in `list'
     	from (irb):7
+
     irb> l.linode.job.list(:LinodeId => 12446)
     => [#<OpenStruct action="linode.boot", jobid=1241724, duration=8, host_finish_dt="2009-07-14 17:07:29.0",
     host_message="", linodeid=12446, host_success=1, host_start_dt="2009-07-14 17:07:21.0",
