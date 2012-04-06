@@ -273,3 +273,4 @@ Here is an annoyingly exhaustive IRB session where I play around with the API:
 * Thanks to Musfuut ([musfuut](http://github.com/musfuut)) for diagnosing and recommending a fix for OpenStruct and 'type' data members in Linode returned results.
 * Thanks to mihaibirsan ([mihaibirsan](http://github.com/mihaibirsan)) for diagnosing a problem with dependencies on the 'crack' library.
 * Thanks to Adam Durana ([durana](http://github.com/durana)) for adding support for linode.ip.addprivate.
+* Thanks to Gustavo Beathyate ([goddamnhippie](http://github/goddamnhippie)) for markdownifying the README.
