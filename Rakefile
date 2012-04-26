@@ -1,7 +1,12 @@
 require 'rubygems'
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
+
+begin
+  require 'rdoc/task'
+rescue LoadError
+  require 'rake/rdoctask'
+end
 require 'rspec/core/rake_task'
 
 desc 'Default: run specs.'
@@ -27,7 +32,7 @@ begin
     gemspec.add_dependency('httparty', '>= 0.4.4')
     gemspec.add_dependency('crack', '>= 0.3.1')
   end
-  Jeweler::GemcutterTasks.new  
+  Jeweler::GemcutterTasks.new
 rescue LoadError
 end
 
