@@ -20,6 +20,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  crack
   httparty
   mocha
   rake (= 0.8.7)
