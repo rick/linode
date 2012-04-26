@@ -1,6 +1,5 @@
 require 'rubygems'
 require 'ostruct'
-require 'ostruct_tweak'
 require 'httparty'
 require 'crack'
 
@@ -122,7 +121,16 @@ class Linode
       item[k.downcase] = item[k]
       item.delete(k) if k != k.downcase
     end
-    ::OpenStruct.new(item)
+    Linode::OpenStruct.new(item)
+  end
+
+  # some of our Linode API data results include a 'type' data member.
+  # OpenStruct will have problems providing a .type method, so we special-case this.
+  #
+  class OpenStruct < ::OpenStruct
+    def type
+      @table[:type]
+    end
   end
 end
 
