@@ -80,23 +80,14 @@ irb> l.avail.distributions.first.label
 => "Arch Linux 2007.08"
 
 irb> l.domain.resource.list
-RuntimeError: Error completing request [domain.resource.list] @ [https://api.linode.com/] with data [{}]:
-ERRORCODE6ERRORMESSAGEDOMAINID is required but was not passed in
-	from ./lib/linode.rb:31:in `send_request'
-	from ./lib/linode.rb:13:in `list'
-	from (irb):3
+RuntimeError: Errors completing request [domain.resource.list] @ [https://api.linode.com/] with data [{}]:
+  - Error #6 - DOMAINID is required but was not passed in.  (Please consult http://www.linode.com/api/dns/domain.resource.list)
 irb> l.domain.resource.list(:DomainId => '1')
-RuntimeError: Error completing request [domain.resource.list] @ [https://api.linode.com/] with data
-[{:DomainId=>"1"}]: ERRORCODE5ERRORMESSAGEObject not found
-	from ./lib/linode.rb:31:in `send_request'
-	from ./lib/linode.rb:13:in `list'
-	from (irb):5
+RuntimeError: Errors completing request [domain.resource.list] @ [https://api.linode.com/] with data [{:DomainId=>"1"}]:
+  - Error #5 - Object not found.  (Please consult http://www.linode.com/api/dns/domain.resource.list)
 irb> l.domain.resource.list(:DomainId => '1', :ResourceId => '2')
-RuntimeError: Error completing request [domain.resource.list] @ [https://api.linode.com/] with data
-[{:DomainId=>"1", :ResourceId=>"2"}]: ERRORCODE5ERRORMESSAGEObject not found
-	from ./lib/linode.rb:31:in `send_request'
-	from ./lib/linode.rb:13:in `list'
-	from (irb):7
+RuntimeError: Errors completing request [domain.resource.list] @ [https://api.linode.com/] with data [{:DomainId=>"1", :ResourceId=>"2"}]:
+  - Error #5 - Object not found.  (Please consult http://www.linode.com/api/dns/domain.resource.list)
 
 irb> l.linode
 => #<Linode::Linode:0x10056e4 @api_url="https://api.linode.com/", @api_key="TOPSECRETAPIKEY">
@@ -105,22 +96,15 @@ irb> l.linode.list
 irb> l.linode.list.size
 => 4
 irb> l.linode.list.first
-=> #<OpenStruct datacenterid=6, lpm_displaygroup="", totalxfer=600, alert_bwquota_enabled=1, alert_diskio_enabled=1,
-watchdog=1, alert_cpu_threshold=90, alert_bwout_threshold=5, backupsenabled=0, backupweeklyday="", status=1,
-alert_cpu_enabled=1, label="byggvir", totalram=1080, backupwindow=0, alert_diskio_threshold=300,
-alert_bwin_threshold=5, alert_bwquota_threshold=80, linodeid=12446, totalhd=49152, alert_bwin_enabled=1,
-alert_bwout_enabled=1>
+=> #<OpenStruct datacenterid=6, lpm_displaygroup="", totalxfer=600, alert_bwquota_enabled=1, alert_diskio_enabled=1, watchdog=1, alert_cpu_threshold=90, alert_bwout_threshold=5, backupsenabled=0, backupweeklyday="", status=1, alert_cpu_enabled=1, label="byggvir", totalram=1080, backupwindow=0, alert_diskio_threshold=300, alert_bwin_threshold=5, alert_bwquota_threshold=80, linodeid=12446, totalhd=49152, alert_bwin_enabled=1, alert_bwout_enabled=1>
 irb> l.linode.list.first.datacenterid
 => 6
 irb> l.linode.list.first.label
 => "byggvir"
 
-irb(main):003:0* l.linode.config.list
-RuntimeError: Error completing request [linode.config.list] @ [https://api.linode.com/] with data [{}]:
-ERRORCODE6ERRORMESSAGELINODEID is required but was not passed in
-	from ./lib/linode.rb:45:in `send_request'
-	from ./lib/linode.rb:13:in `list'
-	from (irb):3
+irb> l.linode.config.list
+RuntimeError: Errors completing request [linode.config.list] @ [https://api.linode.com/] with data [{}]:
+  - Error #6 - LINODEID is required but was not passed in.  (Please consult http://www.linode.com/api/linode/linode.config.list)
 irb> l.linode.list
 => [#<OpenStruct datacenterid=6, lpm_displaygroup="", totalxfer=600, alert_bwquota_enabled=1, alert_diskio_enabled=1, watchdog=1, alert_cpu_threshold=90, alert_bwout_threshold=5, backupsenabled=0, backupweeklyday="", status=1, alert_cpu_enabled=1, label="byggvir", totalram=1080, backupwindow=0, alert_diskio_threshold=300, alert_bwin_threshold=5, alert_bwquota_threshold=80, linodeid=12446, totalhd=49152, alert_bwin_enabled=1, alert_bwout_enabled=1>, #<OpenStruct datacenterid=4, lpm_displaygroup="", totalxfer=200, alert_bwquota_enabled=1, alert_diskio_enabled=1, watchdog=1, alert_cpu_threshold=90, alert_bwout_threshold=5, backupsenabled=0, backupweeklyday="", status=1, alert_cpu_enabled=1, label="bragi", totalram=360, backupwindow=0, alert_diskio_threshold=300, alert_bwin_threshold=5, alert_bwquota_threshold=80, linodeid=15418, totalhd=16384, alert_bwin_enabled=1, alert_bwout_enabled=1>, #<OpenStruct datacenterid=2, lpm_displaygroup="", totalxfer=200, alert_bwquota_enabled=1, alert_diskio_enabled=1, watchdog=1, alert_cpu_threshold=90, alert_bwout_threshold=5, backupsenabled=0, backupweeklyday="", status=1, alert_cpu_enabled=1, label="nerthus", totalram=360, backupwindow=0, alert_diskio_threshold=300, alert_bwin_threshold=5, alert_bwquota_threshold=80, linodeid=15419, totalhd=16384, alert_bwin_enabled=1, alert_bwout_enabled=1>, #<OpenStruct datacenterid=3, lpm_displaygroup="", totalxfer=200, alert_bwquota_enabled=1, alert_diskio_enabled=1, watchdog=1, alert_cpu_threshold=90, alert_bwout_threshold=5, backupsenabled=0, backupweeklyday=0, status=1, alert_cpu_enabled=1, label="hoenir", totalram=360, backupwindow=0, alert_diskio_threshold=500, alert_bwin_threshold=5, alert_bwquota_threshold=80, linodeid=24405, totalhd=16384,alert_bwin_enabled=1, alert_bwout_enabled=1>]
 irb> l.linode.list.first
@@ -133,11 +117,8 @@ irb> l.linode.config.list(:LinodeId => 12446).first.disklist
 => "79850,79851,79854,,,,,,"
 
 irb> l.linode.job.list
-RuntimeError: Error completing request [linode.job.list] @ [https://api.linode.com/] with data [{}]:
-ERRORCODE6ERRORMESSAGELINODEID is required but was not passed in
-	from ./lib/linode.rb:45:in `send_request'
-	from ./lib/linode.rb:13:in `list'
-	from (irb):7
+RuntimeError: Errors completing request [linode.job.list] @ [https://api.linode.com/] with data [{}]:
+  - Error #6 - LINODEID is required but was not passed in.  (Please consult http://www.linode.com/api/linode/linode.job.list)
 
 irb> l.linode.job.list(:LinodeId => 12446)
 => [#<OpenStruct action="linode.boot", jobid=1241724, duration=8, host_finish_dt="2009-07-14 17:07:29.0", host_message="", linodeid=12446, host_success=1, host_start_dt="2009-07-14 17:07:21.0", entered_dt="2009-07-14 17:06:25.0", label="System Boot - byggvir">, #<OpenStruct action="linode.shutdown", jobid=1241723, duration=14, host_finish_dt="2009-07-14 17:07:20.0", host_message="", linodeid=12446, host_success=1, host_start_dt="2009-07-14 17:07:06.0", entered_dt="2009-07-14 17:06:25.0", label="System Shutdown">, #<OpenStruct action="linode.boot", jobid=1182441, duration=0, host_finish_dt="2009-06-10 04:27:49.0", host_message="Linode already running", linodeid=12446, host_success=0, host_start_dt="2009-06-10 04:27:49.0", entered_dt="2009-06-10 04:26:05.0", label="Lassie initiated boot">, #<OpenStruct action="linode.boot", jobid=1182436, duration=8, host_finish_dt="2009-06-10 04:27:49.0", host_message="", linodeid=12446, host_success=1, host_start_dt="2009-06-10 04:27:41.0", entered_dt="1974-01-04 00:00:00.0", label="Host initiated restart">, #<OpenStruct action="linode.boot", jobid=1182273, duration=0, host_finish_dt="2009-06-10 03:02:31.0", host_message="Linode already running", linodeid=12446, host_success=0, host_start_dt="2009-06-10 03:02:31.0", entered_dt="2009-06-10 02:59:49.0", label="Lassie initiated boot">, #<OpenStruct action="linode.boot", jobid=1182268, duration=8, host_finish_dt="2009-06-10 03:02:31.0", host_message="", linodeid=12446, host_success=1, host_start_dt="2009-06-10 03:02:23.0", entered_dt="1974-01-04 00:00:00.0", label="Host initiated restart">, #<OpenStruct action="linode.boot", jobid=1182150, duration=1, host_finish_dt="2009-06-10 01:28:40.0", host_message="Linode already running", linodeid=12446, host_success=0, host_start_dt="2009-06-10 01:28:39.0", entered_dt="2009-06-10 01:26:55.0", label="Lassie initiated boot">, #<OpenStruct action="linode.boot", jobid=1182145, duration=8, host_finish_dt="2009-06-10 01:28:39.0", host_message="", linodeid=12446, host_success=1, host_start_dt="2009-06-10 01:28:31.0", entered_dt="1974-01-04 00:00:00.0", label="Host initiated restart">]
@@ -145,11 +126,8 @@ irb> l.linode.job.list(:LinodeId => 12446).size
 => 8
 
 irb> l.linode.ip.list
-RuntimeError: Error completing request [linode.ip.list] @ [https://api.linode.com/] with data [{}]:
-ERRORCODE6ERRORMESSAGELINODEID is required but was not passed in
-	from ./lib/linode.rb:45:in `send_request'
-	from ./lib/linode.rb:13:in `list'
-	from (irb):10
+RuntimeError: Errors completing request [linode.ip.list] @ [https://api.linode.com/] with data [{}]:
+  - Error #6 - LINODEID is required but was not passed in.  (Please consult http://www.linode.com/api/linode/linode.ip.list)
 irb> l.linode.ip.list(:LinodeId => 12446)
 => [#<OpenStruct rdns_name="byggvir.websages.com", ipaddressid=12286, linodeid=12446, ispublic=1, ipaddress="209.123.234.161">, #<OpenStruct rdns_name="li101-51.members.linode.com", ipaddressid=23981, linodeid=12446, ispublic=1, ipaddress="97.107.140.51">]
 irb> ^D@ Wed Aug 05 01:50:52 rick@Yer-Moms-Computer
