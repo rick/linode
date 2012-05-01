@@ -1,13 +1,7 @@
 require 'rubygems'
 require 'ostruct'
-require 'ostruct_tweak'
 require 'httparty'
-require 'crack'
-
-begin
-  YAML::ENGINE.yamler = 'syck'
-rescue # see: https://github.com/rick/linode/issues/12
-end
+require 'json'
 
 class Linode
   attr_reader :username, :password
@@ -96,7 +90,7 @@ class Linode
   end
 
   def post(data)
-    Crack::JSON.parse(HTTParty.post(api_url, :body => data))
+    JSON.parse(HTTParty.post(api_url, :body => data))
   end
 
   def error?(response)
@@ -122,7 +116,16 @@ class Linode
       item[k.downcase] = item[k]
       item.delete(k) if k != k.downcase
     end
-    ::OpenStruct.new(item)
+    Linode::OpenStruct.new(item)
+  end
+
+  # some of our Linode API data results include a 'type' data member.
+  # OpenStruct will have problems providing a .type method, so we special-case this.
+  #
+  class OpenStruct < ::OpenStruct
+    def type
+      @table[:type]
+    end
   end
 end
 
