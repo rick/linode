@@ -1,4 +1,16 @@
 
+0.7.9 / 2012-05-01
+==================
+
+  * Version bump to 0.7.9
+  * update README to thank Kenn Ejima
+  * Improved ruby language highlighting in README. (kenn)
+  * Fixed broken error messages in README. (kenn)
+  * Switch from Crack to JSON. Do not mutate yamler. (kenn)
+  * Remove and ignore Gemfile.lock. (kenn)
+  * Do not pollute OpenStruct globally. (kenn)
+  * Rspec is now deprecated, use RSpec instead. (kenn)
+
 0.7.8 / 2012-04-26
 ==================
 
