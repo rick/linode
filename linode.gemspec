@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "linode"
-  s.version = "0.7.8"
+  s.version = "0.7.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rick Bradley"]
-  s.date = "2012-04-26"
+  s.date = "2012-05-01"
   s.description = "This is a wrapper around Linode's automation facilities."
   s.email = "rick@rickbradley.com"
   s.extra_rdoc_files = [
@@ -19,7 +19,6 @@ Gem::Specification.new do |s|
     ".rspec",
     "CHANGELOG",
     "Gemfile",
-    "Gemfile.lock",
     "MIT-LICENSE",
     "README.md",
     "Rakefile",
@@ -40,7 +39,6 @@ Gem::Specification.new do |s|
     "lib/linode/stackscript.rb",
     "lib/linode/test.rb",
     "lib/linode/user.rb",
-    "lib/ostruct_tweak.rb",
     "linode.gemspec",
     "spec/linode/avail_spec.rb",
     "spec/linode/domain/resource_spec.rb",
@@ -69,20 +67,17 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<httparty>, [">= 0"])
-      s.add_runtime_dependency(%q<crack>, [">= 0"])
+      s.add_runtime_dependency(%q<json>, [">= 0"])
       s.add_runtime_dependency(%q<httparty>, [">= 0.4.4"])
-      s.add_runtime_dependency(%q<crack>, [">= 0.3.1"])
     else
       s.add_dependency(%q<httparty>, [">= 0"])
-      s.add_dependency(%q<crack>, [">= 0"])
+      s.add_dependency(%q<json>, [">= 0"])
       s.add_dependency(%q<httparty>, [">= 0.4.4"])
-      s.add_dependency(%q<crack>, [">= 0.3.1"])
     end
   else
     s.add_dependency(%q<httparty>, [">= 0"])
-    s.add_dependency(%q<crack>, [">= 0"])
+    s.add_dependency(%q<json>, [">= 0"])
     s.add_dependency(%q<httparty>, [">= 0.4.4"])
-    s.add_dependency(%q<crack>, [">= 0.3.1"])
   end
 end
 
