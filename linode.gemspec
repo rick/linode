@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "linode"
-  s.version = "0.7.9"
+  s.version = "0.7.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Rick Bradley"]
-  s.date = "2012-05-01"
+  s.date = "2012-10-19"
   s.description = "This is a wrapper around Linode's automation facilities."
   s.email = "rick@rickbradley.com"
   s.extra_rdoc_files = [

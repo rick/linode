@@ -70,6 +70,8 @@ describe 'Linode' do
 
     it 'should use the user.getapikey remote call to look up the API key associated with the username/password combo specified at creation time' do
       @json = '{"ERRORARRAY":[],"DATA":{"USERNAME":"ogc","API_KEY":"blahblahblah"},"ACTION":"user.getapikey"}'
+      @json.stubs(:parsed_response).returns(JSON.parse(@json))
+
       HTTParty.expects(:post).with(@api_url,
         :body => {
           :api_action => 'user.getapikey',
@@ -136,6 +138,7 @@ describe 'Linode' do
           "ACTION":"test.echo",
           "DATA":{"FOO":"bar"}
         }!
+      @json.stubs(:parsed_response).returns(JSON.parse(@json))
       HTTParty.stubs(:post).returns(@json)
       @linode.stubs(:api_url).returns('https://fake.linode.com/')
     end
@@ -216,21 +219,27 @@ describe 'Linode' do
 
     describe 'when the result is a list of hashes' do
       it 'should return a list of objects with lower-cased methods for the data fields' do
-        HTTParty.stubs(:post).returns(%Q!{
+        @json = %Q!{
             "ERRORARRAY":[],
             "ACTION":"test.echo",
             "DATA":[{"FOO":"bar"},{"BAR":"baz"}]
-        }!)
+        }!
+        @json.stubs(:parsed_response).returns(JSON.parse(@json))
+
+        HTTParty.stubs(:post).returns(@json)
         @linode.send_request('test.echo', {}).first.foo.should == 'bar'
         @linode.send_request('test.echo', {}).last.bar.should == 'baz'
       end
 
       it 'should return a list of objects which do not respond to upper-case URLs for the data fields' do
-        HTTParty.stubs(:post).returns(%Q!{
+        @json = %Q!{
             "ERRORARRAY":[],
             "ACTION":"test.echo",
             "DATA":[{"FOO":"bar"},{"BAR":"baz"}]
-        }!)
+        }!
+        @json.stubs(:parsed_response).returns(JSON.parse(@json))
+
+        HTTParty.stubs(:post).returns(@json)
         @linode.send_request('test.echo', {}).first.should_not respond_to(:FOO)
         @linode.send_request('test.echo', {}).last.should_not respond_to(:BAR)
       end
@@ -248,17 +257,20 @@ describe 'Linode' do
 
     describe 'when the result is neither a list nor a hash' do
       it 'should return the result unchanged' do
-        HTTParty.stubs(:post).returns(%Q!{
+        @json = %Q!{
             "ERRORARRAY":[],
             "ACTION":"test.echo",
             "DATA":"thingie"
-        }!)
+        }!
+        @json.stubs(:parsed_response).returns(JSON.parse(@json))
+        HTTParty.stubs(:post).returns(@json)
         @linode.send_request('test.echo', {}).should == "thingie"
       end
     end
 
     it 'should be able to parse real JSON when processing a request' do
       json = '{"ERRORARRAY":[],"DATA":[{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":90,"IS64BIT":0,"LABEL":"Arch Linux 2011.08","MINIMAGESIZE":500,"CREATE_DT":"2011-09-26 17:18:05.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":91,"IS64BIT":1,"LABEL":"Arch Linux 2011.08 64bit","MINIMAGESIZE":500,"CREATE_DT":"2011-09-26 17:18:05.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":88,"IS64BIT":0,"LABEL":"CentOS 6.2","MINIMAGESIZE":800,"CREATE_DT":"2011-07-19 11:38:20.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":89,"IS64BIT":1,"LABEL":"CentOS 6.2 64bit","MINIMAGESIZE":800,"CREATE_DT":"2011-07-19 11:38:20.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":77,"IS64BIT":0,"LABEL":"Debian 6","MINIMAGESIZE":550,"CREATE_DT":"2011-02-08 16:54:31.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":78,"IS64BIT":1,"LABEL":"Debian 6 64bit","MINIMAGESIZE":550,"CREATE_DT":"2011-02-08 16:54:31.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":94,"IS64BIT":0,"LABEL":"Fedora 16","MINIMAGESIZE":1000,"CREATE_DT":"2012-04-09 14:12:04.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":95,"IS64BIT":1,"LABEL":"Fedora 16 64bit","MINIMAGESIZE":1000,"CREATE_DT":"2012-04-09 14:12:32.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":72,"IS64BIT":0,"LABEL":"Gentoo","MINIMAGESIZE":1000,"CREATE_DT":"2010-09-13 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":53,"IS64BIT":1,"LABEL":"Gentoo 64bit","MINIMAGESIZE":1000,"CREATE_DT":"2009-04-04 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":96,"IS64BIT":0,"LABEL":"openSUSE 12.1","MINIMAGESIZE":1000,"CREATE_DT":"2012-04-13 11:43:30.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":97,"IS64BIT":1,"LABEL":"openSUSE 12.1 64bit","MINIMAGESIZE":1000,"CREATE_DT":"2012-04-13 11:43:30.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":86,"IS64BIT":0,"LABEL":"Slackware 13.37","MINIMAGESIZE":600,"CREATE_DT":"2011-06-05 15:11:59.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":87,"IS64BIT":1,"LABEL":"Slackware 13.37 64bit","MINIMAGESIZE":600,"CREATE_DT":"2011-06-05 15:11:59.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":64,"IS64BIT":0,"LABEL":"Ubuntu 10.04 LTS","MINIMAGESIZE":450,"CREATE_DT":"2010-04-29 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":65,"IS64BIT":1,"LABEL":"Ubuntu 10.04 LTS 64bit","MINIMAGESIZE":450,"CREATE_DT":"2010-04-29 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":92,"IS64BIT":0,"LABEL":"Ubuntu 11.10","MINIMAGESIZE":750,"CREATE_DT":"2011-10-14 14:29:42.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":93,"IS64BIT":1,"LABEL":"Ubuntu 11.10 64bit","MINIMAGESIZE":850,"CREATE_DT":"2011-10-14 14:29:42.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":59,"IS64BIT":0,"LABEL":"CentOS 5.6","MINIMAGESIZE":950,"CREATE_DT":"2009-08-17 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":60,"IS64BIT":1,"LABEL":"CentOS 5.6 64bit","MINIMAGESIZE":950,"CREATE_DT":"2009-08-17 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":50,"IS64BIT":0,"LABEL":"Debian 5.0","MINIMAGESIZE":350,"CREATE_DT":"2009-02-19 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":51,"IS64BIT":1,"LABEL":"Debian 5.0 64bit","MINIMAGESIZE":350,"CREATE_DT":"2009-02-19 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":84,"IS64BIT":0,"LABEL":"Fedora 15","MINIMAGESIZE":900,"CREATE_DT":"2011-05-25 18:57:36.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":85,"IS64BIT":1,"LABEL":"Fedora 15 64bit","MINIMAGESIZE":900,"CREATE_DT":"2011-05-25 18:58:07.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":79,"IS64BIT":0,"LABEL":"openSUSE 11.4","MINIMAGESIZE":650,"CREATE_DT":"2011-03-10 11:36:46.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":80,"IS64BIT":1,"LABEL":"openSUSE 11.4 64bit","MINIMAGESIZE":650,"CREATE_DT":"2011-03-10 11:36:46.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":68,"IS64BIT":0,"LABEL":"Slackware 13.1","MINIMAGESIZE":512,"CREATE_DT":"2010-05-10 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":69,"IS64BIT":1,"LABEL":"Slackware 13.1 64bit","MINIMAGESIZE":512,"CREATE_DT":"2010-05-10 00:00:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":73,"IS64BIT":0,"LABEL":"Ubuntu 10.10","MINIMAGESIZE":500,"CREATE_DT":"2010-10-11 15:19:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":74,"IS64BIT":1,"LABEL":"Ubuntu 10.10 64bit","MINIMAGESIZE":500,"CREATE_DT":"2010-10-11 15:19:00.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":82,"IS64BIT":0,"LABEL":"Ubuntu 11.04","MINIMAGESIZE":500,"CREATE_DT":"2011-04-28 16:28:48.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":83,"IS64BIT":1,"LABEL":"Ubuntu 11.04 64bit","MINIMAGESIZE":500,"CREATE_DT":"2011-04-28 16:28:48.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":41,"IS64BIT":0,"LABEL":"Ubuntu 8.04 LTS","MINIMAGESIZE":350,"CREATE_DT":"2008-04-23 15:11:29.0"},{"REQUIRESPVOPSKERNEL":1,"DISTRIBUTIONID":42,"IS64BIT":1,"LABEL":"Ubuntu 8.04 LTS 64bit","MINIMAGESIZE":350,"CREATE_DT":"2008-06-03 12:51:11.0"}],"ACTION":"avail.distributions"}'
+      json.stubs(:parsed_response).returns(JSON.parse(json))
       HTTParty.stubs(:post).returns(json)
       @linode.stubs(:api_url).returns('https://fake.linode.com/')
 

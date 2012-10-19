@@ -136,6 +136,7 @@ irb> ^D@ Wed Aug 05 01:50:52 rick@Yer-Moms-Computer
 ## CREDITS:
 
 * Thanks to Kenn Ejima ([kenn](http://github.com/kenn)) for json library improvements, OStruct cleanups, README improvements, etc.
+* Thanks to Arthur D'Antonio III ([arthurD](http://github.com/arthurD)) for a patch to fix string decoding via HTTParty.parsed_response.
 * Thanks to Aditya Sanghi ([asanghi](http://github.com/asanghi)) for a patch to properly namespace stackscripts functionality.
 * Thanks to Dan Hodos ([danhodos](http://github.com/danhodos)) for diagnosing and fixing an issue with sending GET requests instead of POST request.
 * Thanks to Aaron Hamid for updates for RSpec 2 and work on user.getapikey + username/password initialization.
