@@ -90,7 +90,7 @@ class Linode
   end
 
   def post(data)
-    JSON.parse(HTTParty.post(api_url, :body => data))
+    HTTParty.post(api_url, :body => data).parsed_response
   end
 
   def error?(response)
