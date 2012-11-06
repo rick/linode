@@ -133,6 +133,9 @@ irb> l.linode.ip.list(:LinodeId => 12446)
 irb> ^D@ Wed Aug 05 01:50:52 rick@Yer-Moms-Computer
 ```
 
+## REBUILDING:
+If you're interested in rebuilding you're Linode this may be of use: [razic/linode-rebuild](https://github.com/razic/linode-rebuild).
+
 ## CREDITS:
 
 * Thanks to Kenn Ejima ([kenn](http://github.com/kenn)) for json library improvements, OStruct cleanups, README improvements, etc.
