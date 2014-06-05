@@ -92,7 +92,7 @@ class Linode
   end
 
   def post(data)
-    @logger.info "POST #{api_url.to_s} body:#{data.inspect}" if @logger
+    logger.info "POST #{api_url.to_s} body:#{data.inspect}" if logger
     HTTParty.post(api_url, :body => data).parsed_response
   end
 
