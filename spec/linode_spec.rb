@@ -28,6 +28,11 @@ describe Linode do
         lambda { Linode.new({}) }.should raise_error(ArgumentError)
       end
 
+      it 'should allow providing a logger' do
+        linode = Linode.new(:api_key => 'foo', :logger => 'bar')
+        linode.logger.should == 'bar'
+      end
+
       it 'should return a Linode instance' do
         Linode.new(:api_key => 'foo').class.should == Linode
       end
@@ -503,4 +508,3 @@ describe 'Linode' do
     end
   end
 end
-

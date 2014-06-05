@@ -144,3 +144,5 @@ irb> ^D@ Wed Aug 05 01:50:52 rick@Yer-Moms-Computer
 * Thanks to mihaibirsan ([mihaibirsan](http://github.com/mihaibirsan)) for diagnosing a problem with dependencies on the 'crack' library.
 * Thanks to Adam Durana ([durana](http://github.com/durana)) for adding support for linode.ip.addprivate.
 * Thanks to Gustavo Beathyate ([goddamnhippie](http://github/goddamnhippie)) for markdownifying the README.
+* Thanks to Robbert Klarenbeek ([rubencaro](https://github/robbertkl)) for API updates.
+* Thanks to [rubencaro](https://github/rubencaro) for adding logger functionality.
