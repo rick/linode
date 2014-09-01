@@ -10,7 +10,7 @@
 
 ## RUNNING:
 
-Consult the Linode API guide here: [http://www.linode.com/api/autodoc.cfm](http://www.linode.com/api/autodoc.cfm)    
+Consult the Linode API guide here: [https://www.linode.com/api/](https://www.linode.com/api/)    
 You will need to get an API key (check your account profile).
 
 Here is an annoyingly exhaustive IRB session where I play around with the API:
