@@ -11,7 +11,7 @@ describe Linode::Account do
     @linode.class.should < Linode
   end
 
-  %w(estimateinvoice list).each do |action|
+  %w(estimateinvoice info).each do |action|
     it "should allow accessing the #{action} API" do
       @linode.should respond_to(action.to_sym)
     end
