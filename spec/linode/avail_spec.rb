@@ -11,7 +11,7 @@ describe Linode::Avail do
     @linode.class.should < Linode
   end
 
-  %w(datacenters kernels linodeplans distributions stackscripts).each do |action|
+  %w(datacenters kernels linodeplans distributions stackscripts nodebalancers).each do |action|
     it "should allow accessing the #{action} API" do
       @linode.should respond_to(action.to_sym)
     end
@@ -42,8 +42,8 @@ describe Linode::Avail do
         @linode.send(action.to_sym).should == { :bar => :baz }
       end
 
-      it "should consider the documentation to live at http://www.linode.com/api/utility/avail.#{action}" do
-        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "http://www.linode.com/api/utility/avail.#{action}"
+      it "should consider the documentation to live at https://www.linode.com/api/utility/avail.#{action}" do
+        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/api/utility/avail.#{action}"
       end
     end
   end

@@ -10,7 +10,7 @@
 
 ## RUNNING:
 
-Consult the Linode API guide here: [http://www.linode.com/api/autodoc.cfm](http://www.linode.com/api/autodoc.cfm)    
+Consult the Linode API guide here: [https://www.linode.com/api/](https://www.linode.com/api/)    
 You will need to get an API key (check your account profile).
 
 Here is an annoyingly exhaustive IRB session where I play around with the API:
@@ -143,6 +143,7 @@ irb> ^D@ Wed Aug 05 01:50:52 rick@Yer-Moms-Computer
 * Thanks to Musfuut ([musfuut](http://github.com/musfuut)) for diagnosing and recommending a fix for OpenStruct and 'type' data members in Linode returned results.
 * Thanks to mihaibirsan ([mihaibirsan](http://github.com/mihaibirsan)) for diagnosing a problem with dependencies on the 'crack' library.
 * Thanks to Adam Durana ([durana](http://github.com/durana)) for adding support for linode.ip.addprivate.
-* Thanks to Gustavo Beathyate ([goddamnhippie](http://github/goddamnhippie)) for markdownifying the README.
-* Thanks to Robbert Klarenbeek ([rubencaro](https://github/robbertkl)) for API updates.
-* Thanks to [rubencaro](https://github/rubencaro) for adding logger functionality.
+* Thanks to Gustavo Beathyate ([goddamnhippie](http://github.com/goddamnhippie)) for markdownifying the README.
+* Thanks to Robbert Klarenbeek ([rubencaro](https://github.com/robbertkl)) for API updates.
+* Thanks to [rubencaro](https://github.com/rubencaro) for adding logger functionality.
+* Thanks to Marques Johansson [displague](https://github.com/displague) for API updates

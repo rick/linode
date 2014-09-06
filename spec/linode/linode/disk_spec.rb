@@ -11,7 +11,7 @@ describe Linode::Linode::Disk do
     @linode.class.should < Linode
   end
 
-  %w(update create list createfromdistribution createfromstackscript duplicate delete resize).each do |action|
+  %w(update create list createfromdistribution createfromimage createfromstackscript duplicate delete resize imagize).each do |action|
     it "should allow accessing the #{action} API" do
       @linode.should respond_to(action.to_sym)
     end
@@ -42,8 +42,8 @@ describe Linode::Linode::Disk do
         @linode.send(action.to_sym).should == { :bar => :baz }
       end
 
-      it "should consider the documentation to live at http://www.linode.com/api/linode/linode.disk.#{action}" do
-        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "http://www.linode.com/api/linode/linode.disk.#{action}"
+      it "should consider the documentation to live at https://www.linode.com/api/linode/linode.disk.#{action}" do
+        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/api/linode/linode.disk.#{action}"
       end
     end
   end
