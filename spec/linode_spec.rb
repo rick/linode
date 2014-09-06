@@ -9,7 +9,7 @@ describe Linode do
 
     describe 'when creating a new Linode instance' do
       it 'should accept an arguments hash' do
-        lambda { Linode.new(:api_key => 'foo') }.should_not raise_error(ArgumentError)
+        lambda { Linode.new(:api_key => 'foo') }.should_not raise_error
       end
 
       it 'should require an arguments hash' do
@@ -17,11 +17,11 @@ describe Linode do
       end
 
       it 'should not fail if an API key is given' do
-        lambda { Linode.new({ :api_key => 'foo' }) }.should_not raise_error(ArgumentError)
+        lambda { Linode.new({ :api_key => 'foo' }) }.should_not raise_error
       end
 
       it 'should not fail if a username/password combo is given' do
-        lambda { Linode.new({ :username => 'bar', :password => 'baz' }) }.should_not raise_error(ArgumentError)
+        lambda { Linode.new({ :username => 'bar', :password => 'baz' }) }.should_not raise_error
       end
 
       it 'should fail if no API key nor username/password combo is given' do
@@ -149,7 +149,7 @@ describe 'Linode' do
     end
 
     it 'should allow a request name and a data hash' do
-      lambda { @linode.send_request('test.echo', {}) }.should_not raise_error(ArgumentError)
+      lambda { @linode.send_request('test.echo', {}) }.should_not raise_error
     end
 
     it 'should require a request name and a data hash' do
@@ -290,7 +290,7 @@ describe 'Linode' do
 
   describe 'when providing access to the Linode Test API' do
     it 'should allow no arguments' do
-      lambda { @linode.test }.should_not raise_error(ArgumentError)
+      lambda { @linode.test }.should_not raise_error
     end
 
     it 'should require no arguments' do
@@ -322,7 +322,7 @@ describe 'Linode' do
 
   describe 'when providing access to the Linode Avail API' do
     it 'should allow no arguments' do
-      lambda { @linode.avail }.should_not raise_error(ArgumentError)
+      lambda { @linode.avail }.should_not raise_error
     end
 
     it 'should require no arguments' do
@@ -354,7 +354,7 @@ describe 'Linode' do
 
   describe 'when providing access to the Linode User API' do
     it 'should allow no arguments' do
-      lambda { @linode.user }.should_not raise_error(ArgumentError)
+      lambda { @linode.user }.should_not raise_error
     end
 
     it 'should require no arguments' do
@@ -386,7 +386,7 @@ describe 'Linode' do
 
   describe 'when providing access to the Linode Domain API' do
     it 'should allow no arguments' do
-      lambda { @linode.domain }.should_not raise_error(ArgumentError)
+      lambda { @linode.domain }.should_not raise_error
     end
 
     it 'should require no arguments' do
@@ -418,7 +418,7 @@ describe 'Linode' do
 
   describe 'when providing access to the Linode Linode API' do
     it 'should allow no arguments' do
-      lambda { @linode.linode }.should_not raise_error(ArgumentError)
+      lambda { @linode.linode }.should_not raise_error
     end
 
     it 'should require no arguments' do
@@ -450,7 +450,7 @@ describe 'Linode' do
 
   describe 'when providing access to the Linode Nodebalancer API' do
     it 'should allow no arguments' do
-      lambda { @linode.nodebalancer }.should_not raise_error(ArgumentError)
+      lambda { @linode.nodebalancer }.should_not raise_error
     end
 
     it 'should require no arguments' do
@@ -482,7 +482,7 @@ describe 'Linode' do
 
   describe 'when providing access to the Linode Stackscript API' do
     it 'should allow no arguments' do
-      lambda { @linode.stackscript }.should_not raise_error(ArgumentError)
+      lambda { @linode.stackscript }.should_not raise_error
     end
 
     it 'should require no arguments' do

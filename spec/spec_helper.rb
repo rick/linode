@@ -8,11 +8,11 @@ rescue LoadError
 end
 
 begin
-  require 'mocha'
+  require 'mocha/api'
 rescue LoadError
   require 'rubygems'
   gem 'mocha'
-  require 'mocha'
+  require 'mocha/api'
 end
 
 require 'httparty'
