@@ -17,7 +17,7 @@ describe Linode::User do
   
   describe 'when returning the API key for the connection' do
     it 'should work without arguments' do
-      lambda { @linode.getapikey }.should_not raise_error(ArgumentError)
+      lambda { @linode.getapikey }.should_not raise_error
     end
     
     it 'should not allow arguments' do
@@ -29,8 +29,8 @@ describe Linode::User do
       @linode.getapikey.should == 'foo'
     end
       
-    it "should consider the documentation to live at http://www.linode.com/api/utility/user.getapikey" do
-      @linode.documentation_path(Linode.action_path(@linode.class.name, 'getapikey')).should == "http://www.linode.com/api/utility/user.getapikey"
+    it "should consider the documentation to live at https://www.linode.com/api/utility/user.getapikey" do
+      @linode.documentation_path(Linode.action_path(@linode.class.name, 'getapikey')).should == "https://www.linode.com/api/utility/user.getapikey"
     end
   end
 end

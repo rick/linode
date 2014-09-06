@@ -5,6 +5,7 @@ require 'json'
 
 class Linode
   attr_reader :username, :password
+  attr_accessor :logger
 
   def self.has_method(*actions)
     actions.each do |action|
@@ -50,11 +51,12 @@ class Linode
 
   def documentation_path(action)
      hits = action.match(/^(.*)\.[^.]+$/)
-    "http://www.linode.com/api/" + @@documentation_category[hits[1]] + '/' + action
+    "https://www.linode.com/api/" + @@documentation_category[hits[1]] + '/' + action
   end
 
   def initialize(args)
     @api_url = args[:api_url] if args[:api_url]
+    @logger = args[:logger]
 
     if args.include?(:api_key)
       @api_key = args[:api_key]
@@ -90,6 +92,7 @@ class Linode
   end
 
   def post(data)
+    logger.info "POST #{api_url.to_s} body:#{data.inspect}" if logger
     HTTParty.post(api_url, :body => data).parsed_response
   end
 
