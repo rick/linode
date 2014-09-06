@@ -24,8 +24,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  httparty
-  json
-  mocha
-  rake
+  httparty (~> 0.0)
+  json (~> 1.0)
+  mocha (~> 1.0)
+  rake (~> 10.0)
   rspec (~> 2.0)
