@@ -51,7 +51,7 @@ class Linode
 
   def documentation_path(action)
      hits = action.match(/^(.*)\.[^.]+$/)
-    "http://www.linode.com/api/" + @@documentation_category[hits[1]] + '/' + action
+    "https://www.linode.com/api/" + @@documentation_category[hits[1]] + '/' + action
   end
 
   def initialize(args)

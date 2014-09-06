@@ -42,8 +42,8 @@ describe Linode::Nodebalancer::Config do
         @linode.send(action.to_sym).should == { :bar => :baz }
       end
 
-      it "should consider the documentation to live at http://www.linode.com/api/nodebalancer/nodebalancer.config.#{action}" do
-        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "http://www.linode.com/api/nodebalancer/nodebalancer.config.#{action}"
+      it "should consider the documentation to live at https://www.linode.com/api/nodebalancer/nodebalancer.config.#{action}" do
+        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/api/nodebalancer/nodebalancer.config.#{action}"
       end
     end
   end
