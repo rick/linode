@@ -18,11 +18,11 @@ describe Linode::Linode do
   
     describe "when accessing the #{action} API" do
       it 'should allow a data hash' do
-        lambda { @linode.send(action.to_sym, {}) }.should_not raise_error(ArgumentError)
+        lambda { @linode.send(action.to_sym, {}) }.should_not raise_error
       end
     
       it 'should not require arguments' do
-        lambda { @linode.send(action.to_sym) }.should_not raise_error(ArgumentError)      
+        lambda { @linode.send(action.to_sym) }.should_not raise_error
       end
     
       it "should request the linode.#{action} action" do
@@ -58,7 +58,7 @@ describe Linode::Linode do
     end
 
     it 'should allow no arguments' do
-      lambda { @linode.config }.should_not raise_error(ArgumentError)
+      lambda { @linode.config }.should_not raise_error
     end
     
     it 'should require no arguments' do
@@ -96,7 +96,7 @@ describe Linode::Linode do
     end
 
     it 'should allow no arguments' do
-      lambda { @linode.disk }.should_not raise_error(ArgumentError)
+      lambda { @linode.disk }.should_not raise_error
     end
     
     it 'should require no arguments' do
@@ -134,7 +134,7 @@ describe Linode::Linode do
     end
 
     it 'should allow no arguments' do
-      lambda { @linode.job }.should_not raise_error(ArgumentError)
+      lambda { @linode.job }.should_not raise_error
     end
     
     it 'should require no arguments' do
@@ -172,7 +172,7 @@ describe Linode::Linode do
     end
 
     it 'should allow no arguments' do
-      lambda { @linode.ip }.should_not raise_error(ArgumentError)
+      lambda { @linode.ip }.should_not raise_error
     end
     
     it 'should require no arguments' do

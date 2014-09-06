@@ -18,11 +18,11 @@ describe Linode::Linode::Config do
   
     describe "when accessing the #{action} API" do
       it 'should allow a data hash' do
-        lambda { @linode.send(action.to_sym, {}) }.should_not raise_error(ArgumentError)
+        lambda { @linode.send(action.to_sym, {}) }.should_not raise_error
       end
     
       it 'should not require arguments' do
-        lambda { @linode.send(action.to_sym) }.should_not raise_error(ArgumentError)      
+        lambda { @linode.send(action.to_sym) }.should_not raise_error
       end
     
       it "should request the avail.#{action} action" do

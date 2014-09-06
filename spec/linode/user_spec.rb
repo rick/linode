@@ -17,7 +17,7 @@ describe Linode::User do
   
   describe 'when returning the API key for the connection' do
     it 'should work without arguments' do
-      lambda { @linode.getapikey }.should_not raise_error(ArgumentError)
+      lambda { @linode.getapikey }.should_not raise_error
     end
     
     it 'should not allow arguments' do
