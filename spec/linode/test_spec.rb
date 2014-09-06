@@ -19,10 +19,12 @@ describe Linode::Test do
 
     describe "when accessing the #{action} API" do
       it 'should allow a data hash' do
+        @linode.stubs(:send_request)
         lambda { @linode.send(action.to_sym, {}) }.should_not raise_error
       end
 
       it 'should not require arguments' do
+        @linode.stubs(:send_request)
         lambda { @linode.send(action.to_sym) }.should_not raise_error
       end
 
