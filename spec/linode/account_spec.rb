@@ -18,11 +18,13 @@ describe Linode::Account do
 
     describe "when accessing the #{action} API" do
       it 'should allow a data hash' do
-        lambda { @linode.send(action.to_sym, {}) }.should_not raise_error(ArgumentError)
+        @linode.stubs(:send_request)
+        lambda { @linode.send(action.to_sym, {}) }.should_not raise_error
       end
 
       it 'should not require arguments' do
-        lambda { @linode.send(action.to_sym) }.should_not raise_error(ArgumentError)      
+        @linode.stubs(:send_request)
+        lambda { @linode.send(action.to_sym) }.should_not raise_error
       end
 
       it "should request the account.#{action} action" do
