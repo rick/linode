@@ -6,5 +6,5 @@ group :test do
   gem "mocha", "~>1.0"
 end
 
-gem "httparty", ">=0.4.4"
+gem "httparty", "~>0.0"
 gem "json", "~>1.0"
