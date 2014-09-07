@@ -29,7 +29,7 @@ class Linode
     end
   end
 
-  has_namespace :test, :avail, :user, :domain, :linode, :nodebalancer, :stackscript
+  has_namespace :test, :avail, :user, :domain, :linode, :nodebalancer, :stackscript, :account
 
   @@documentation_category = {}
 
