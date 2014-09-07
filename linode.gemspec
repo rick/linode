@@ -2,8 +2,8 @@
 
 Gem::Specification.new do |s|
   s.name = "linode"
-  s.version = "0.8.0"
-  s.date = "2014-09-07"
+  s.version = "0.8.1"
+  s.date = "2014-09-06"
   s.description = "This is a wrapper around Linode's automation facilities."
   s.summary = "a Ruby wrapper for the Linode API"
   s.authors = ["Rick Bradley"]
