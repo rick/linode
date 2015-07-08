@@ -27,6 +27,5 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency(%q<httparty>, ["~> 0.0"])
   s.add_runtime_dependency(%q<json>, ["~> 1.0"])
-  s.add_runtime_dependency(%q<crack>, ["~> 0.0"])
 end
 
