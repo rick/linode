@@ -1,5 +1,10 @@
 # Linode Ruby API
 
+## NOTICE
+
+I have had almost zero time to devote to maintenance of this project. As it is still in active use, I am looking for a candidate maintainer for the project.  Contact rick@rickbradley.com if you are interested in assisting with or taking over maintenance.
+
+
 ## INSTALLATION:
 
  Make sure gemcutter.org is in your gem sources list, then:
