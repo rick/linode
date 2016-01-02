@@ -539,4 +539,32 @@ describe 'Linode' do
       linode.stackscript.should == result
     end
   end
+
+  describe 'when providing access to the Linode Image API' do
+    it 'should allow no arguments' do
+      lambda { @linode.image }.should_not raise_error
+    end
+
+    it 'should require no arguments' do
+      lambda { @linode.image(:foo) }.should raise_error(ArgumentError)
+    end
+
+    it 'should return a Linode::Image instance' do
+      @linode.image.class.should == Linode::Image
+    end
+
+    it 'should set the API key on the Linode::Image instance to be our API key' do
+      @linode.image.api_key.should == @api_key
+    end
+
+    it 'should set the API url on the Linode::Image instance to be our API url' do
+      @linode.image.api_url.should == @api_url
+    end
+
+    it 'should return the same Linode::Image instance when called again' do
+      linode = Linode.new(:api_key => @api_key)
+      result = linode.image
+      linode.image.should == result
+    end
+  end
 end
