@@ -2,8 +2,8 @@
 
 ## NOTICE
 
-I have had almost zero time to devote to maintenance of this project. As it is still in active use, I am looking for a candidate maintainer for the project.  Contact rick@rickbradley.com if you are interested in assisting with or taking over maintenance.
-
+Please welcome [Marques Johansson](https://github.com/displague) and [Drew DeVault](https://github.com/sircmpwn), 
+both of Linode, as new maintainers of the ruby Linode API library!
 
 ## INSTALLATION:
 
