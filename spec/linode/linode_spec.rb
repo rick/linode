@@ -11,7 +11,7 @@ describe Linode::Linode do
     @linode.class.should < Linode
   end
 
-  %w(update create list shutdown boot delete reboot clone resize).each do |action|
+  %w(update create kvmify list mutate shutdown boot delete reboot clone resize).each do |action|
     it "should allow accessing the #{action} API" do
       @linode.should respond_to(action.to_sym)
     end
