@@ -2,8 +2,7 @@
 
 Gem::Specification.new do |s|
   s.name = "linode"
-  s.version = "0.9.0"
-  s.date = "2016-01-02"
+  s.version = File.open("VERSION", "r").read.strip
   s.description = "This is a wrapper around Linode's automation facilities."
   s.summary = "a Ruby wrapper for the Linode API"
   s.authors = ["Rick Bradley"]
@@ -25,7 +24,10 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 
-  s.add_runtime_dependency(%q<httparty>, ["~> 0.0"])
-  s.add_runtime_dependency(%q<json>, ["~> 1.0"])
+  s.add_runtime_dependency "httparty", "~> 0.0"
+
+  s.add_development_dependency "rake", "~> 10.0"
+  s.add_development_dependency "rspec", "~> 2.0"
+  s.add_development_dependency "mocha", "~> 1.0"
 end
 

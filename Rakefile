@@ -1,12 +1,6 @@
 require 'rubygems'
 require 'rake'
 require 'rake/testtask'
-
-begin
-  require 'rdoc/task'
-rescue LoadError
-  require 'rake/rdoctask'
-end
 require 'rspec/core/rake_task'
 
 desc 'Default: run specs.'

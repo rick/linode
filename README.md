@@ -7,11 +7,64 @@ both of Linode, as new maintainers of the ruby Linode API library!
 
 ## INSTALLATION:
 
- Make sure gemcutter.org is in your gem sources list, then:
+The recommended way to use this library is to include `linode` in your Gemfile and use Bundler.
 
-     % sudo gem install linode
+```ruby
+gem 'linode', '~> 0.9.0'
+```
 
- To run tests you will need both rspec and mocha installed.
+By default, this will also install the latest version of the linode library's dependencies:
+
+* httparty
+
+The latest version of these dependencies requires Ruby >= 1.9.3  
+If for some reason you need to use an older version of Ruby (1.8.7),
+you can include the following dependencies in your Gemfile.
+
+```ruby
+gem 'json', '~>1.8'
+gem 'httparty', '0.11'
+```
+
+Running on versions of Ruby older than 1.9.3 is considered deprecated
+and support will not actively be maintained for older versions of Ruby.
+Using this library with EOL versions of Ruby is frowned upon :(
+
+At this point you can use Bundler to install or update your dependencies.
+
+```bash
+bundle install
+```
+
+## CONTRIBUTING
+
+If you would like to submit a bug fix or feature, you can do so with the traditional GitHub workflow.
+
+* Fork this repo
+* Git clone your repo locally
+* `cd` into the repo
+* `bundle install` to get all runtime and development dependencies
+* Make a new branch
+* Submit a PR
+
+### Development
+
+Bug fixes and features should include new tests using the RSpec format.
+Reviewing the current way tests are written is the best way to understand this.
+All tests live under the `spec` folder at the root of the repo.
+
+You can run the tests suite by executing:
+
+```bash
+rake test
+```
+
+Adding new dependencies is highly discouraged!  
+Maintaining compatibility with Ruby 1.9.3 is currently required.
+
+Testing your changes against Ruby 1.9.3 and ~> 2.3 should be enough to ensure compatibilty between all version inclusively.
+
+[RVM](rmv.io) can greatly help with testing different versions of Ruby.
 
 ## RUNNING:
 
@@ -21,7 +74,8 @@ You will need to get an API key (check your account profile).
 Here is an annoyingly exhaustive IRB session where I play around with the API:
 
 ```ruby
-irb> require 'rubygems'
+bundle exec irb
+
 irb> require 'linode'
 irb> api_key = 'TOPSECRETAPIKEY'
 irb> l = Linode.new(:api_key => api_key)
