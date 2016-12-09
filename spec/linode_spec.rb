@@ -93,6 +93,80 @@ describe 'Linode' do
       @linode.api_key.should == @api_key
     end
 
+    it 'should request the API key only when accessed' do
+      @linode = Linode.new(:username => @username, :password => @api_url)
+      @linode.stubs(:fetch_api_key).returns 'foo'
+      @linode.api_key.should == 'foo'
+    end
+
+    it 'should allow assigning a label to an API key' do
+      @json = '{"ERRORARRAY":[],"DATA":{"USERNAME":"ogc","API_KEY":"blahblahblah"},"ACTION":"user.getapikey"}'
+      @json.stubs(:parsed_response).returns(JSON.parse(@json))
+
+      HTTParty.expects(:post).with(@api_url,
+        :body => {
+          :api_action => 'user.getapikey',
+          :api_responseFormat => 'json',
+          :username => @username,
+          :password => @password,
+          :label => 'foobar'
+        }
+      ).returns(@json)
+
+      @linode.fetch_api_key(:label => 'foobar')
+    end
+
+    it 'should allow assigning expires when requesting an API key' do
+      @json = '{"ERRORARRAY":[],"DATA":{"USERNAME":"ogc","API_KEY":"blahblahblah"},"ACTION":"user.getapikey"}'
+      @json.stubs(:parsed_response).returns(JSON.parse(@json))
+
+      HTTParty.expects(:post).with(@api_url,
+        :body => {
+          :api_action => 'user.getapikey',
+          :api_responseFormat => 'json',
+          :username => @username,
+          :password => @password,
+          :expires => 5
+        }
+      ).returns(@json)
+
+      @linode.fetch_api_key(:expires => 5)
+    end
+
+    it 'should allow use 0 to signify a non-expiring api-key when passed a nil :expires' do
+      @json = '{"ERRORARRAY":[],"DATA":{"USERNAME":"ogc","API_KEY":"blahblahblah"},"ACTION":"user.getapikey"}'
+      @json.stubs(:parsed_response).returns(JSON.parse(@json))
+
+      HTTParty.expects(:post).with(@api_url,
+        :body => {
+          :api_action => 'user.getapikey',
+          :api_responseFormat => 'json',
+          :username => @username,
+          :password => @password,
+          :expires => 0
+        }
+      ).returns(@json)
+
+      @linode.fetch_api_key(:expires => nil)
+    end
+
+    it 'should not specify expires when :expires was not specified' do
+      @json = '{"ERRORARRAY":[],"DATA":{"USERNAME":"ogc","API_KEY":"blahblahblah"},"ACTION":"user.getapikey"}'
+      @json.stubs(:parsed_response).returns(JSON.parse(@json))
+
+      HTTParty.expects(:post).with(@api_url,
+        :body => {
+          :api_action => 'user.getapikey',
+          :api_responseFormat => 'json',
+          :username => @username,
+          :password => @password
+        }
+      ).returns(@json)
+
+      @linode.fetch_api_key
+    end
+
+
     it 'should fail when looking up the API key if API key remote lookup fails' do
       @linode.stubs(:fetch_api_key).raises
       lambda { @linode.api_key }.should raise_error

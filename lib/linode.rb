@@ -83,13 +83,24 @@ class Linode
     reformat_response(response)
   end
 
-  protected
+  def fetch_api_key(options = {})
+    request = { :api_action => 'user.getapikey', :api_responseFormat => 'json', :username => username, :password => password }
 
-  def fetch_api_key
-    response = post(:api_action => 'user.getapikey', :api_responseFormat => 'json', :username => username, :password => password)
+    if options.key?(:label)
+      request[:label] = options[:label]
+    end
+
+    if options.key?(:expires)
+      expires = options[:expires]
+      request[:expires] = expires.nil? ? 0 : expires
+    end
+
+    response = post(request)
     raise "Errors completing request [user.getapikey] @ [#{api_url}] for username [#{username}]:\n#{error_message(response, 'user.getapikey')}" if error?(response)
     reformat_response(response).api_key
   end
+
+  protected
 
   def post(data)
     logger.info "POST #{api_url.to_s} body:#{data.inspect}" if logger
