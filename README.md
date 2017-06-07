@@ -2,7 +2,7 @@
 
 ## NOTICE
 
-Please welcome [Marques Johansson](https://github.com/displague) and [Drew DeVault](https://github.com/sircmpwn), 
+Please welcome [Marques Johansson](https://github.com/displague) and [Robert DeRose](https://github.com/RobertDeRose),
 both of Linode, as new maintainers of the ruby Linode API library!
 
 ## INSTALLATION:
