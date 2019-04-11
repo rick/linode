@@ -1,8 +1,12 @@
 # -*- encoding: utf-8 -*-
+lib = File.expand_path("../lib", __FILE__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+
+require 'linode/version'
 
 Gem::Specification.new do |s|
   s.name = "linode"
-  s.version = File.open("VERSION", "r").read.strip
+  s.version = Linode::VERSION
   s.description = "This is a wrapper around Linode's automation facilities."
   s.summary = "a Ruby wrapper for the Linode API"
   s.authors = ["Rick Bradley"]

@@ -83,6 +83,9 @@ describe 'Linode' do
           :api_responseFormat => 'json',
           :username => @username,
           :password => @password
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION}"
         }
       ).returns(@json)
       @linode.api_key
@@ -110,6 +113,9 @@ describe 'Linode' do
           :username => @username,
           :password => @password,
           :label => 'foobar'
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION}"
         }
       ).returns(@json)
 
@@ -127,6 +133,9 @@ describe 'Linode' do
           :username => @username,
           :password => @password,
           :expires => 5
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION}"
         }
       ).returns(@json)
 
@@ -144,6 +153,9 @@ describe 'Linode' do
           :username => @username,
           :password => @password,
           :expires => 0
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION}"
         }
       ).returns(@json)
 
@@ -160,6 +172,9 @@ describe 'Linode' do
           :api_responseFormat => 'json',
           :username => @username,
           :password => @password
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION}"
         }
       ).returns(@json)
 
