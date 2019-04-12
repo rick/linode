@@ -85,7 +85,7 @@ describe 'Linode' do
           :password => @password
         },
         :headers => {
-          'User-Agent' => "linode/#{Linode::VERSION}"
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
       @linode.api_key
@@ -115,7 +115,7 @@ describe 'Linode' do
           :label => 'foobar'
         },
         :headers => {
-          'User-Agent' => "linode/#{Linode::VERSION}"
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
 
@@ -135,7 +135,7 @@ describe 'Linode' do
           :expires => 5
         },
         :headers => {
-          'User-Agent' => "linode/#{Linode::VERSION}"
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
 
@@ -155,7 +155,7 @@ describe 'Linode' do
           :expires => 0
         },
         :headers => {
-          'User-Agent' => "linode/#{Linode::VERSION}"
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
 
@@ -174,7 +174,7 @@ describe 'Linode' do
           :password => @password
         },
         :headers => {
-          'User-Agent' => "linode/#{Linode::VERSION}"
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
 

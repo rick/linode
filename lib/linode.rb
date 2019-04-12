@@ -108,7 +108,7 @@ class Linode
   end
 
   def user_agent
-    "linode/#{Linode::VERSION}"
+    "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
   end
 
   def error?(response)
