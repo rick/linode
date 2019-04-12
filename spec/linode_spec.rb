@@ -260,6 +260,13 @@ describe 'Linode' do
       @linode.send_request('test.echo', { })
     end
 
+    it 'should include a custom User-Agent when making its request' do
+      HTTParty.expects(:post).with { |path, args|
+        args[:headers]['User-Agent'] == "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
+      }.returns(@json)
+      @linode.send_request('test.echo', { })
+    end
+
     it 'should set the designated request method as the HTTP API action' do
       HTTParty.expects(:post).with { |path, args|
         args[:body][:api_action] == 'test.echo'
