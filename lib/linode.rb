@@ -104,7 +104,11 @@ class Linode
 
   def post(data)
     logger.info "POST #{api_url.to_s} body:#{data.inspect}" if logger
-    HTTParty.post(api_url, :body => data).parsed_response
+    HTTParty.post(api_url, :body => data, :headers => { 'User-Agent' => user_agent }).parsed_response
+  end
+
+  def user_agent
+    "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
   end
 
   def error?(response)

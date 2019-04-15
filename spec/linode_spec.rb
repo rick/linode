@@ -83,6 +83,9 @@ describe 'Linode' do
           :api_responseFormat => 'json',
           :username => @username,
           :password => @password
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
       @linode.api_key
@@ -110,6 +113,9 @@ describe 'Linode' do
           :username => @username,
           :password => @password,
           :label => 'foobar'
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
 
@@ -127,6 +133,9 @@ describe 'Linode' do
           :username => @username,
           :password => @password,
           :expires => 5
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
 
@@ -144,6 +153,9 @@ describe 'Linode' do
           :username => @username,
           :password => @password,
           :expires => 0
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
 
@@ -160,6 +172,9 @@ describe 'Linode' do
           :api_responseFormat => 'json',
           :username => @username,
           :password => @password
+        },
+        :headers => {
+          'User-Agent' => "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
         }
       ).returns(@json)
 
@@ -241,6 +256,13 @@ describe 'Linode' do
     it 'should provide the API key when making its request' do
       HTTParty.expects(:post).with { |path, args|
         args[:body][:api_key] == @api_key
+      }.returns(@json)
+      @linode.send_request('test.echo', { })
+    end
+
+    it 'should include a custom User-Agent when making its request' do
+      HTTParty.expects(:post).with { |path, args|
+        args[:headers]['User-Agent'] == "linode/#{Linode::VERSION} ruby/#{RUBY_VERSION}"
       }.returns(@json)
       @linode.send_request('test.echo', { })
     end
