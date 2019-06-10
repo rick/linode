@@ -68,7 +68,7 @@ Testing your changes against Ruby 1.9.3 and ~> 2.3 should be enough to ensure co
 
 ## RUNNING:
 
-Consult the Linode API guide here: [https://www.linode.com/api/](https://www.linode.com/api/)    
+Consult the Linode API guide here: [https://www.linode.com/apiv3/](https://www.linode.com/apiv3/)    
 You will need to get an API key (check your account profile).
 
 Here is an annoyingly exhaustive IRB session where I play around with the API:
