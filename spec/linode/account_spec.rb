@@ -42,8 +42,8 @@ describe Linode::Account do
         @linode.send(action.to_sym).should == { :bar => :baz }
       end
 
-      it "should consider the documentation to live at https://www.linode.com/api/account/account.#{action}" do
-        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/api/account/account.#{action}"
+      it "should consider the documentation to live at https://www.linode.com/apiv3/account/account.#{action}" do
+        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/apiv3/account/account.#{action}"
       end
     end
   end

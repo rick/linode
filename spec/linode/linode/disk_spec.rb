@@ -42,8 +42,8 @@ describe Linode::Linode::Disk do
         @linode.send(action.to_sym).should == { :bar => :baz }
       end
 
-      it "should consider the documentation to live at https://www.linode.com/api/linode/linode.disk.#{action}" do
-        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/api/linode/linode.disk.#{action}"
+      it "should consider the documentation to live at https://www.linode.com/apiv3/linode/linode.disk.#{action}" do
+        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/apiv3/linode/linode.disk.#{action}"
       end
     end
   end

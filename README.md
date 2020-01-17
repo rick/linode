@@ -68,7 +68,7 @@ Testing your changes against Ruby 1.9.3 and ~> 2.3 should be enough to ensure co
 
 ## RUNNING:
 
-Consult the Linode API guide here: [https://www.linode.com/api/](https://www.linode.com/api/)    
+Consult the Linode API guide here: [https://www.linode.com/apiv3/](https://www.linode.com/apiv3/)    
 You will need to get an API key (check your account profile).
 
 Here is an annoyingly exhaustive IRB session where I play around with the API:
@@ -189,6 +189,8 @@ RuntimeError: Errors completing request [linode.ip.list] @ [https://api.linode.c
   - Error #6 - LINODEID is required but was not passed in.  (Please consult http://www.linode.com/api/linode/linode.ip.list)
 irb> l.linode.ip.list(:LinodeId => 12446)
 => [#<OpenStruct rdns_name="byggvir.websages.com", ipaddressid=12286, linodeid=12446, ispublic=1, ipaddress="209.123.234.161">, #<OpenStruct rdns_name="li101-51.members.linode.com", ipaddressid=23981, linodeid=12446, ispublic=1, ipaddress="97.107.140.51">]
+irb> l.linode.create(:datacenterid => 2, :planid =>1)
+ => #<Linode::OpenStruct linodeid=14413539>
 irb> ^D@ Wed Aug 05 01:50:52 rick@Yer-Moms-Computer
 ```
 

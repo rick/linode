@@ -42,8 +42,8 @@ describe Linode::Linode::Ip do
         @linode.send(action.to_sym).should == { :bar => :baz }
       end
 
-      it "should consider the documentation to live at https://www.linode.com/api/linode/linode.ip.#{action}" do
-        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/api/linode/linode.ip.#{action}"
+      it "should consider the documentation to live at https://www.linode.com/apiv3/linode/linode.ip.#{action}" do
+        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/apiv3/linode/linode.ip.#{action}"
       end
     end
   end
