@@ -42,8 +42,8 @@ describe Linode::Nodebalancer do
         @linode.send(action.to_sym).should == { :bar => :baz }
       end
 
-      it "should consider the documentation to live at https://www.linode.com/api/nodebalancer/nodebalancer.#{action}" do
-        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/api/nodebalancer/nodebalancer.#{action}"
+      it "should consider the documentation to live at https://www.linode.com/apiv3/nodebalancer/nodebalancer.#{action}" do
+        @linode.documentation_path(Linode.action_path(@linode.class.name, action)).should == "https://www.linode.com/apiv3/nodebalancer/nodebalancer.#{action}"
       end
     end
   end
@@ -62,7 +62,7 @@ describe Linode::Nodebalancer do
     it 'should allow no arguments' do
       lambda { @linode.config }.should_not raise_error
     end
-    
+
     it 'should require no arguments' do
       lambda { @linode.config(:foo) }.should raise_error(ArgumentError)
     end
